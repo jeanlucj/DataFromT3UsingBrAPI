@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Tesfahun A. Setotaw" />
+
+<meta name="date" content="2023-02-28" />
+
+<title>SinglocNorLmer</title>
+
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Myproject</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">SinglocNorLmer</h1>
+<h4 class="author">Tesfahun A. Setotaw</h4>
+<h4 class="date">2023-02-28</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2023-02-28
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Myproject/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230228code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230228)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230228code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230228)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong847a4c8">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong> 847a4c8
+</a>
+</p>
+</div>
+<div id="strongRepositoryversionstrong847a4c8"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version 847a4c8.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rproj.user/
+
+Untracked files:
+    Untracked:  analysis/DataCleaning.Rmd
+    Untracked:  analysis/SingleLocNorLme4.Rmd
+    Untracked:  data/phenotype.csv
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code># 
+list.files()</code></pre>
+<pre><code>[1] &quot;_workflowr.yml&quot;  &quot;analysis&quot;        &quot;code&quot;            &quot;data&quot;           
+[5] &quot;docs&quot;            &quot;Myproject.Rproj&quot; &quot;output&quot;          &quot;README.md&quot;      </code></pre>
+<pre class="r"><code>df = read.csv(&quot;data/phenotype.csv&quot;)
+head(df)</code></pre>
+<pre><code>  studyYear programDbId                                 programName
+1      2022         351 South Dakota State University- Winter Wheat
+2      2022         351 South Dakota State University- Winter Wheat
+3      2022         351 South Dakota State University- Winter Wheat
+4      2022         351 South Dakota State University- Winter Wheat
+5      2022         351 South Dakota State University- Winter Wheat
+6      2022         351 South Dakota State University- Winter Wheat
+  programDescription studyDbId       studyName              studyDescription
+1      Sunish Sehgal      9424 2022_AYT_Aurora 2022 AYT Yield Trial @ Aurora
+2      Sunish Sehgal      9424 2022_AYT_Aurora 2022 AYT Yield Trial @ Aurora
+3      Sunish Sehgal      9424 2022_AYT_Aurora 2022 AYT Yield Trial @ Aurora
+4      Sunish Sehgal      9424 2022_AYT_Aurora 2022 AYT Yield Trial @ Aurora
+5      Sunish Sehgal      9424 2022_AYT_Aurora 2022 AYT Yield Trial @ Aurora
+6      Sunish Sehgal      9424 2022_AYT_Aurora 2022 AYT Yield Trial @ Aurora
+  studyDesign plotWidth plotLength fieldSize fieldTrialIsPlannedToBeGenotyped
+1        RCBD        NA         NA        NA                               NA
+2        RCBD        NA         NA        NA                               NA
+3        RCBD        NA         NA        NA                               NA
+4        RCBD        NA         NA        NA                               NA
+5        RCBD        NA         NA        NA                               NA
+6        RCBD        NA         NA        NA                               NA
+  fieldTrialIsPlannedToCross      plantingDate  harvestDate locationDbId
+1                         NA 2021-September-21 2022-July-21          280
+2                         NA 2021-September-21 2022-July-21          280
+3                         NA 2021-September-21 2022-July-21          280
+4                         NA 2021-September-21 2022-July-21          280
+5                         NA 2021-September-21 2022-July-21          280
+6                         NA 2021-September-21 2022-July-21          280
+  locationName germplasmDbId germplasmName                   germplasmSynonyms
+1   Aurora, SD        228290    EXPEDITION                                    
+2   Aurora, SD        234886         IDEAL                                    
+3   Aurora, SD        238309      OVERLAND NE01643,STEV.BAE.FIRSTSERIE_ENTRY36
+4   Aurora, SD        238948      REDFIELD                                    
+5   Aurora, SD       1382813   SD18B010-29                                    
+6   Aurora, SD       1382813   SD18B010-29                                    
+  observationLevel observationUnitDbId      observationUnitName replicate
+1             plot             1383856 2022_AYT_Aurora-PLOT2124         2
+2             plot             1383749 2022_AYT_Aurora-PLOT2061         2
+3             plot             1383909 2022_AYT_Aurora-PLOT2104         2
+4             plot             1383707 2022_AYT_Aurora-PLOT2081         2
+5             plot             1383905 2022_AYT_Aurora-PLOT1007         1
+6             plot             1383906 2022_AYT_Aurora-PLOT2029         2
+  blockNumber plotNumber rowNumber colNumber entryType plantNumber
+1           2       2124        18         3      test          NA
+2           2       2061        14        10      test          NA
+3           2       2104        17         6      test          NA
+4           2       2081        15        11      test          NA
+5           1       1007         1         7      test          NA
+6           2       2029        12        14      test          NA
+  Grain.protein.content......CO_321.0001205
+1                                      12.9
+2                                      11.5
+3                                      12.1
+4                                      12.0
+5                                      14.4
+6                                      13.5
+  Grain.test.weight...g.l.CO_321.0001210 Grain.yield...kg.ha.CO_321.0001218
+1                                  762.0                             4674.0
+2                                  760.7                             5541.5
+3                                  762.0                             5454.1
+4                                  763.3                             5090.9
+5                                  740.1                             2804.4
+6                                  751.7                             4068.7
+                           notes
+1  (Operator: dwaring87, Time: )
+2  (Operator: dwaring87, Time: )
+3  (Operator: dwaring87, Time: )
+4  (Operator: dwaring87, Time: )
+5  (Operator: dwaring87, Time: )
+6  (Operator: dwaring87, Time: )</code></pre>
+<pre class="r"><code># identify factor variables and change to factor
+library(metan)
+
+df = as_factor(.data = df, c(studyYear,locationName, germplasmName,replicate, blockNumber))
+df$R = as.factor(df$rowNumber)
+df$C = as.factor(df$colNumber)
+str(df)</code></pre>
+<pre><code>&#39;data.frame&#39;:   745 obs. of  36 variables:
+ $ studyYear                                : Factor w/ 1 level &quot;2022&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+ $ programDbId                              : int  351 351 351 351 351 351 351 351 351 351 ...
+ $ programName                              : chr  &quot;South Dakota State University- Winter Wheat&quot; &quot;South Dakota State University- Winter Wheat&quot; &quot;South Dakota State University- Winter Wheat&quot; &quot;South Dakota State University- Winter Wheat&quot; ...
+ $ programDescription                       : chr  &quot;Sunish Sehgal&quot; &quot;Sunish Sehgal&quot; &quot;Sunish Sehgal&quot; &quot;Sunish Sehgal&quot; ...
+ $ studyDbId                                : int  9424 9424 9424 9424 9424 9424 9424 9424 9424 9424 ...
+ $ studyName                                : chr  &quot;2022_AYT_Aurora&quot; &quot;2022_AYT_Aurora&quot; &quot;2022_AYT_Aurora&quot; &quot;2022_AYT_Aurora&quot; ...
+ $ studyDescription                         : chr  &quot;2022 AYT Yield Trial @ Aurora&quot; &quot;2022 AYT Yield Trial @ Aurora&quot; &quot;2022 AYT Yield Trial @ Aurora&quot; &quot;2022 AYT Yield Trial @ Aurora&quot; ...
+ $ studyDesign                              : chr  &quot;RCBD&quot; &quot;RCBD&quot; &quot;RCBD&quot; &quot;RCBD&quot; ...
+ $ plotWidth                                : logi  NA NA NA NA NA NA ...
+ $ plotLength                               : logi  NA NA NA NA NA NA ...
+ $ fieldSize                                : logi  NA NA NA NA NA NA ...
+ $ fieldTrialIsPlannedToBeGenotyped         : logi  NA NA NA NA NA NA ...
+ $ fieldTrialIsPlannedToCross               : logi  NA NA NA NA NA NA ...
+ $ plantingDate                             : chr  &quot;2021-September-21&quot; &quot;2021-September-21&quot; &quot;2021-September-21&quot; &quot;2021-September-21&quot; ...
+ $ harvestDate                              : chr  &quot;2022-July-21&quot; &quot;2022-July-21&quot; &quot;2022-July-21&quot; &quot;2022-July-21&quot; ...
+ $ locationDbId                             : int  280 280 280 280 280 280 280 280 280 280 ...
+ $ locationName                             : Factor w/ 3 levels &quot;Aurora, SD&quot;,&quot;Dakota Lakes, SD&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ germplasmDbId                            : int  228290 234886 238309 238948 1382813 1382813 1382719 1382719 1382704 1382704 ...
+ $ germplasmName                            : Factor w/ 126 levels &quot;EXPEDITION&quot;,&quot;IDEAL&quot;,..: 1 2 3 4 5 5 6 6 7 7 ...
+ $ germplasmSynonyms                        : chr  &quot;&quot; &quot;&quot; &quot;NE01643,STEV.BAE.FIRSTSERIE_ENTRY36&quot; &quot;&quot; ...
+ $ observationLevel                         : chr  &quot;plot&quot; &quot;plot&quot; &quot;plot&quot; &quot;plot&quot; ...
+ $ observationUnitDbId                      : int  1383856 1383749 1383909 1383707 1383905 1383906 1383747 1383812 1383738 1383913 ...
+ $ observationUnitName                      : chr  &quot;2022_AYT_Aurora-PLOT2124&quot; &quot;2022_AYT_Aurora-PLOT2061&quot; &quot;2022_AYT_Aurora-PLOT2104&quot; &quot;2022_AYT_Aurora-PLOT2081&quot; ...
+ $ replicate                                : Factor w/ 2 levels &quot;1&quot;,&quot;2&quot;: 2 2 2 2 1 2 1 2 1 2 ...
+ $ blockNumber                              : Factor w/ 2 levels &quot;1&quot;,&quot;2&quot;: 2 2 2 2 1 2 1 2 1 2 ...
+ $ plotNumber                               : int  2124 2061 2104 2081 1007 2029 1008 2034 1009 2046 ...
+ $ rowNumber                                : int  18 14 17 15 1 12 1 12 1 13 ...
+ $ colNumber                                : int  3 10 6 11 7 14 8 9 9 4 ...
+ $ entryType                                : chr  &quot;test&quot; &quot;test&quot; &quot;test&quot; &quot;test&quot; ...
+ $ plantNumber                              : logi  NA NA NA NA NA NA ...
+ $ Grain.protein.content......CO_321.0001205: num  12.9 11.5 12.1 12 14.4 13.5 13.9 11.5 14.1 11.8 ...
+ $ Grain.test.weight...g.l.CO_321.0001210   : num  762 761 762 763 740 ...
+ $ Grain.yield...kg.ha.CO_321.0001218       : num  4674 5542 5454 5091 2804 ...
+ $ notes                                    : chr  &quot; (Operator: dwaring87, Time: )&quot; &quot; (Operator: dwaring87, Time: )&quot; &quot; (Operator: dwaring87, Time: )&quot; &quot; (Operator: dwaring87, Time: )&quot; ...
+ $ R                                        : Factor w/ 37 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 18 14 17 15 1 12 1 12 1 13 ...
+ $ C                                        : Factor w/ 18 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 3 10 6 11 7 14 8 9 9 4 ...</code></pre>
+<pre class="r"><code>## Summarise the data
+
+summary(df)</code></pre>
+<pre><code> studyYear   programDbId  programName        programDescription   studyDbId   
+ 2022:745   Min.   :351   Length:745         Length:745         Min.   :9421  
+            1st Qu.:351   Class :character   Class :character   1st Qu.:9421  
+            Median :351   Mode  :character   Mode  :character   Median :9423  
+            Mean   :351                                         Mean   :9423  
+            3rd Qu.:351                                         3rd Qu.:9424  
+            Max.   :351                                         Max.   :9424  
+                                                                              
+  studyName         studyDescription   studyDesign        plotWidth     
+ Length:745         Length:745         Length:745         Mode:logical  
+ Class :character   Class :character   Class :character   NA&#39;s:745      
+ Mode  :character   Mode  :character   Mode  :character                 
+                                                                        
+                                                                        
+                                                                        
+                                                                        
+ plotLength     fieldSize      fieldTrialIsPlannedToBeGenotyped
+ Mode:logical   Mode:logical   Mode:logical                    
+ NA&#39;s:745       NA&#39;s:745       NA&#39;s:745                        
+                                                               
+                                                               
+                                                               
+                                                               
+                                                               
+ fieldTrialIsPlannedToCross plantingDate       harvestDate       
+ Mode:logical               Length:745         Length:745        
+ NA&#39;s:745                   Class :character   Class :character  
+                            Mode  :character   Mode  :character  
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+  locationDbId             locationName germplasmDbId         germplasmName
+ Min.   : 67.0   Aurora, SD      :241   Min.   : 228290   SD18B010-29:  6  
+ 1st Qu.: 67.0   Dakota Lakes, SD:252   1st Qu.:1382733   SD18B017-6 :  6  
+ Median :231.0   Winner, SD      :252   Median :1382773   SD18B134-16:  6  
+ Mean   :191.4                          Mean   :1350643   SD19C0114-3:  6  
+ 3rd Qu.:280.0                          3rd Qu.:1382806   SD19D086-4 :  6  
+ Max.   :280.0                          Max.   :1382847   SD19D154-2 :  6  
+                                                          (Other)    :709  
+ germplasmSynonyms  observationLevel   observationUnitDbId observationUnitName
+ Length:745         Length:745         Min.   :1383064     Length:745         
+ Class :character   Class :character   1st Qu.:1383250     Class :character   
+ Mode  :character   Mode  :character   Median :1383544     Mode  :character   
+                                       Mean   :1383509                        
+                                       3rd Qu.:1383732                        
+                                       Max.   :1383926                        
+                                                                              
+ replicate blockNumber   plotNumber     rowNumber       colNumber     
+ 1:367     1:367       Min.   :1001   Min.   : 1.00   Min.   : 1.000  
+ 2:378     2:378       1st Qu.:1066   1st Qu.:15.00   1st Qu.: 5.000  
+                       Median :2002   Median :24.00   Median : 9.000  
+                       Mean   :1572   Mean   :21.79   Mean   : 8.925  
+                       3rd Qu.:2064   3rd Qu.:29.00   3rd Qu.:13.000  
+                       Max.   :2126   Max.   :37.00   Max.   :18.000  
+                                                                      
+  entryType         plantNumber    Grain.protein.content......CO_321.0001205
+ Length:745         Mode:logical   Min.   : 8.90                            
+ Class :character   NA&#39;s:745       1st Qu.:13.10                            
+ Mode  :character                  Median :14.60                            
+                                   Mean   :14.23                            
+                                   3rd Qu.:15.40                            
+                                   Max.   :18.50                            
+                                   NA&#39;s   :5                                
+ Grain.test.weight...g.l.CO_321.0001210 Grain.yield...kg.ha.CO_321.0001218
+ Min.   :625.6                          Min.   :2414                      
+ 1st Qu.:722.1                          1st Qu.:3524                      
+ Median :741.4                          Median :3968                      
+ Mean   :738.4                          Mean   :4061                      
+ 3rd Qu.:759.4                          3rd Qu.:4533                      
+ Max.   :801.9                          Max.   :5992                      
+ NA&#39;s   :5                              NA&#39;s   :2                         
+    notes                 R             C      
+ Length:745         24     : 36   7      : 46  
+ Class :character   25     : 36   8      : 46  
+ Mode  :character   26     : 36   9      : 46  
+                    27     : 36   10     : 46  
+                    28     : 36   11     : 46  
+                    29     : 36   12     : 46  
+                    (Other):529   (Other):469  </code></pre>
+<pre class="r"><code>library(dplyr)
+library(ggplot2)
+colnames(df)</code></pre>
+<pre><code> [1] &quot;studyYear&quot;                                
+ [2] &quot;programDbId&quot;                              
+ [3] &quot;programName&quot;                              
+ [4] &quot;programDescription&quot;                       
+ [5] &quot;studyDbId&quot;                                
+ [6] &quot;studyName&quot;                                
+ [7] &quot;studyDescription&quot;                         
+ [8] &quot;studyDesign&quot;                              
+ [9] &quot;plotWidth&quot;                                
+[10] &quot;plotLength&quot;                               
+[11] &quot;fieldSize&quot;                                
+[12] &quot;fieldTrialIsPlannedToBeGenotyped&quot;         
+[13] &quot;fieldTrialIsPlannedToCross&quot;               
+[14] &quot;plantingDate&quot;                             
+[15] &quot;harvestDate&quot;                              
+[16] &quot;locationDbId&quot;                             
+[17] &quot;locationName&quot;                             
+[18] &quot;germplasmDbId&quot;                            
+[19] &quot;germplasmName&quot;                            
+[20] &quot;germplasmSynonyms&quot;                        
+[21] &quot;observationLevel&quot;                         
+[22] &quot;observationUnitDbId&quot;                      
+[23] &quot;observationUnitName&quot;                      
+[24] &quot;replicate&quot;                                
+[25] &quot;blockNumber&quot;                              
+[26] &quot;plotNumber&quot;                               
+[27] &quot;rowNumber&quot;                                
+[28] &quot;colNumber&quot;                                
+[29] &quot;entryType&quot;                                
+[30] &quot;plantNumber&quot;                              
+[31] &quot;Grain.protein.content......CO_321.0001205&quot;
+[32] &quot;Grain.test.weight...g.l.CO_321.0001210&quot;   
+[33] &quot;Grain.yield...kg.ha.CO_321.0001218&quot;       
+[34] &quot;notes&quot;                                    
+[35] &quot;R&quot;                                        
+[36] &quot;C&quot;                                        </code></pre>
+<pre class="r"><code>colnames(df)[31] = &quot;Gr_protein&quot;
+colnames(df)[32] = &quot;test_weight&quot;
+colnames(df)[33] = &quot;Yield&quot;
+df %&gt;% group_by(germplasmName,locationName) %&gt;% summarize_at(.vars = &quot;Yield&quot;, .funs = c(min,max,mean))</code></pre>
+<pre><code># A tibble: 378 × 5
+# Groups:   germplasmName [126]
+   germplasmName locationName       fn1   fn2   fn3
+   &lt;fct&gt;         &lt;fct&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 EXPEDITION    Aurora, SD       4674  4674  4674 
+ 2 EXPEDITION    Dakota Lakes, SD 3013. 3901. 3457.
+ 3 EXPEDITION    Winner, SD       3921. 4728. 4324.
+ 4 IDEAL         Aurora, SD       5542. 5542. 5542.
+ 5 IDEAL         Dakota Lakes, SD 2912  3558. 3235.
+ 6 IDEAL         Winner, SD       3524  4466. 3995.
+ 7 OVERLAND      Aurora, SD       5454. 5454. 5454.
+ 8 OVERLAND      Dakota Lakes, SD 3248. 4190. 3719.
+ 9 OVERLAND      Winner, SD       4660. 4734. 4698.
+10 REDFIELD      Aurora, SD       5091. 5091. 5091.
+# … with 368 more rows</code></pre>
+<pre class="r"><code>ggplot(df) +
+  geom_boxplot(mapping = aes(x = germplasmName, y = Yield)) +
+  facet_grid(&quot;locationName&quot;)</code></pre>
+<p><img src="figure/SingleLocNorLme4.Rmd/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>out = boxplot.stats(df$Yield)$out
+out_ind &lt;- which(df$Yield %in% c(out))
+out_ind</code></pre>
+<pre><code>integer(0)</code></pre>
+<pre class="r"><code>df1 = df
+# analysis using lme4 package 
+df1 &lt;- df1[order(df1$locationName,df1$colNumber,df1$rowNumber),] # to reorder the row and column
+
+# Standard file name for the script and factor variables 
+met = df1
+met$geno = met$germplasmName
+met$rep = met$replicate
+met$C  = met$C
+met$R = met$R
+met$col = met$colNumber
+met$row = met$rowNumber
+met$block = met$blockNumber
+met$env = met$studyYear:met$locationName
+met$env  = gsub(pattern = &quot;:&quot;, replacement = &quot;_&quot;, x = met$env)
+met$env =as.factor(met$env)
+
+##### Trait selection 
+
+Traits &lt;- c(&quot;Yield&quot;, &quot;Gr_protein&quot;,&quot;test_weight&quot;) 
+
+######################
+# output storage - 
+######################
+
+r = length(levels(met$rep))
+Env&lt;-levels(met$env)
+ne&lt;-length(levels(met$env)) # the number of the environment year:loc or location
+nt&lt;-length(Traits) # number of traits 
+Result_lmer.h2 &lt;- matrix(nrow = ne, ncol = nt) # the matrix to put the h2
+colnames(Result_lmer.h2) &lt;- Traits
+rownames(Result_lmer.h2) &lt;- Env
+#####
+# Variance compent
+Varcomp.comb = matrix(nrow = nt, ncol = 5)
+colnames(Varcomp.comb) = c(&quot;v.g&quot;, &quot;v.ge&quot;,&quot;v.gy&quot;, &quot;v.e&quot;, &quot;v.ph&quot;)
+rownames(Varcomp.comb) = Traits
+
+Result.Varcomp &lt;- vector(mode = &quot;list&quot;, length = length(Env)) #length(levels(met.fbn$env)))
+names(Result.Varcomp) &lt;- Env
+
+# BLUE and BLUP mean
+Result.MeanBLUP &lt;- vector(mode = &quot;list&quot;, length = length(Env)) #length(levels(met.fbn$env)))
+names(Result.MeanBLUP) &lt;- Env
+
+Result.MeanBLUE &lt;- vector(mode = &quot;list&quot;, length = length(Env)) #length(levels(met.fbn$env)))
+names(Result.MeanBLUE) &lt;- Env
+
+library(lme4)
+for (i in 1:ne){
+  SL &lt;- droplevels(subset(x = met, subset = env == Env[i]) )# Subseting the data for each env
+  TraitN = colnames(SL[Traits])[colSums(is.na(SL[Traits])) &lt; 25] # selecting the trait without NA
+  ntt = length((TraitN))
+  gen = length(levels(SL$geno))
+  MAT &lt;- matrix(nrow = gen, ncol = ntt) # create matrix based on the number of traits
+  colnames(MAT)&lt;- TraitN
+  rownames(MAT) &lt;- sort(levels(SL$geno))
+  
+  for (Trait in TraitN){
+    eval(parse(text = paste(&quot;mix = lmer(formula = &quot;,Trait,&quot; ~ (1|geno) + (1|rep), data = SL)&quot;)))
+    
+    s1&lt;-VarCorr(mix)
+    s2 &lt;- data.frame(s1)
+    rownames(s2) &lt;- c(&quot;geno&quot;, &quot;rep&quot;, &quot;Residual&quot;)
+    v.e1 &lt;-s2[&quot;Residual&quot;, &quot;vcov&quot;]
+    v.g1 &lt;-s2[&quot;geno&quot;, &quot;vcov&quot;]
+    Result_lmer.h2[i,Trait]&lt;- round(v.g1/(v.g1 + v.e1/r),3)
+    cf = coefficients(mix)
+    dim(cf$geno)
+    for(name in seq(levels(SL$geno))){
+
+    MAT[name,Trait] = cf$geno[name,1]
+    
+    }
+    
+  }
+}</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.2 (2022-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Ventura 13.2.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] lme4_1.1-31     Matrix_1.5-3    ggplot2_3.4.1   dplyr_1.1.0    
+[5] metan_1.17.0    workflowr_1.7.0
+
+loaded via a namespace (and not attached):
+ [1] ggrepel_0.9.3       Rcpp_1.0.10         lattice_0.20-45    
+ [4] tidyr_1.3.0         getPass_0.2-2       ps_1.7.2           
+ [7] rprojroot_2.0.3     digest_0.6.31       utf8_1.2.3         
+[10] ggforce_0.4.1       R6_2.5.1            plyr_1.8.8         
+[13] evaluate_0.20       highr_0.10          httr_1.4.5         
+[16] pillar_1.8.1        rlang_1.0.6         minqa_1.2.5        
+[19] rstudioapi_0.14     nloptr_2.0.3        whisker_0.4.1      
+[22] callr_3.7.3         jquerylib_0.1.4     R.utils_2.12.2     
+[25] R.oo_1.25.0         rmarkdown_2.20      mathjaxr_1.6-0     
+[28] styler_1.9.0        labeling_0.4.2      splines_4.2.2      
+[31] stringr_1.5.0       polyclip_1.10-4     munsell_0.5.0      
+[34] numDeriv_2016.8-1.1 compiler_4.2.2      httpuv_1.6.9       
+[37] xfun_0.37           pkgconfig_2.0.3     lmerTest_3.1-3     
+[40] htmltools_0.5.4     tidyselect_1.2.0    tibble_3.1.8       
+[43] reshape_0.8.9       fansi_1.0.4         withr_2.5.0        
+[46] later_1.3.0         MASS_7.3-58.2       R.methodsS3_1.8.2  
+[49] grid_4.2.2          nlme_3.1-162        jsonlite_1.8.4     
+[52] GGally_2.1.2        gtable_0.3.1        lifecycle_1.0.3    
+[55] git2r_0.31.0        magrittr_2.0.3      scales_1.2.1       
+[58] cli_3.6.0           stringi_1.7.12      cachem_1.0.7       
+[61] farver_2.1.1        fs_1.6.1            promises_1.2.0.1   
+[64] bslib_0.4.2         generics_0.1.3      vctrs_0.5.2        
+[67] boot_1.3-28.1       RColorBrewer_1.1-3  tools_4.2.2        
+[70] R.cache_0.16.0      glue_1.6.2          tweenr_2.0.2       
+[73] purrr_1.0.1         processx_3.8.0      fastmap_1.1.1      
+[76] yaml_2.3.7          colorspace_2.1-0    knitr_1.42         
+[79] patchwork_1.1.2     sass_0.4.5         </code></pre>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

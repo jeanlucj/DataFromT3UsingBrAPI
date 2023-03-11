@@ -1,0 +1,123 @@
+---
+title: "Spatial anlaysis of experiments over location with orginal data using sommer"
+author: "Tesfahun A. Setotaw"
+date: "2023-02-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+# data import and cleaning 
+# set the working directory 
+setwd("/Users/tas286/Documents/GitHub/spatial_analysis")
+list.files()
+df = read.csv("data/phenotype.csv")
+head(df)
+# identify factor variables and change to factor
+library(metan)
+
+df = as_factor(.data = df, c(studyYear,locationName, germplasmName,replicate, blockNumber))
+df$R = as.factor(df$rowNumber)
+df$C = as.factor(df$colNumber)
+str(df)
+
+## Summarise the data
+
+summary(df)
+library(dplyr)
+library(ggplot2)
+colnames(df)
+colnames(df)[31] = "Gr_protein"
+colnames(df)[32] = "test_weight"
+colnames(df)[33] = "Yield"
+df %>% group_by(germplasmName,locationName) %>% summarize_at(.vars = "Yield", .funs = c(min,max,mean))
+ggplot(df) +
+  geom_boxplot(mapping = aes(x = germplasmName, y = Yield)) +
+  facet_grid("locationName")
+
+out = boxplot.stats(df$Yield)$out
+out_ind <- which(df$Yield %in% c(out))
+out_ind
+df1 = df
+# analysis using lme4 package 
+df1 <- df1[order(df1$locationName,df1$colNumber,df1$rowNumber),] # to reorder the row and column
+
+# Standard file name for the script and factor variables 
+met = df1
+met$geno = met$germplasmName
+met$rep = met$replicate
+met$C  = met$C
+met$R = met$R
+met$col = met$colNumber
+met$row = met$rowNumber
+met$block = met$blockNumber
+met$env = met$studyYear:met$locationName
+met$env  = gsub(pattern = ":", replacement = "_", x = met$env)
+met$env =as.factor(met$env)
+```
+
+```{r}
+# The combined analysis for spatial analysis using sommer 
+
+# List of traits to be analyze 
+Traits <- c("Yield", "Gr_protein","test_weight")
+
+# length and list of levels of the factors 
+r = length(levels(met$rep))
+Env<-levels(met$env)
+ne<-length(levels(met$env)) # the number of the environment year:loc or location
+nt<-length(Traits) # number of traits 
+Result_comb_org_sp.h2 <- matrix(nrow = 1, ncol = nt) # the matrix to put the h2
+colnames(Result_comb_org_sp.h2) <- Traits
+rownames(Result_comb_org_sp.h2) <- "Combined"
+
+library(sommer)
+
+# subseting the traits with NA vlaue less than 25
+TraitN = colnames(met[Traits])[colSums(is.na(met[Traits])) < 25] # selecting the trait without NA
+  ntt = length((TraitN))
+  gen = length(levels(met$geno))
+  MAT <- matrix(nrow = gen, ncol = ntt) # create matrix based on the number of traits
+  colnames(MAT)<- TraitN
+  rownames(MAT) <- sort(levels(met$geno))
+  
+ system.time( for (Trait in TraitN){
+    eval(parse(text = paste("mixcombsp = mmer(",Trait,"~1,
+            random=~vsr(dsr(env),geno) + geno + geno:env +
+              vsr(dsr(env),R) +
+              vsr(dsr(env),C) +
+                spl2Da(row,col,at.var=env),
+            rcov=~vsr(dsr(env),units),
+            data=met)")))
+
+    svscomb_sp = summary(mixcombsp)
+    sspcomb_sp<-data.frame(svscomb_sp$varcomp)
+    rownames(sspcomb_sp)[4] = "geno"
+     rownames(sspcomb_sp)[5] = "geno:env"
+     v.g1 <-sspcomb_sp["geno", "VarComp"]
+     v.ge <- sspcomb_sp["geno:env","VarComp"]
+     avr = as.data.frame(anova.mmer(mixcombsp))
+     v.e1 = avr["Residual", "Mean.Sq"]
+    Result_comb_org_sp.h2[1,Trait]<- round(v.g1/(v.g1 + (v.ge/ne) + (v.e1/ne)),3)
+    ft = fitted.mmer(mixcombsp)
+    dat_ft = ft$dataWithFitted
+    ftmean = dat_ft %>% group_by(geno) %>%
+      summarize_at(.vars = paste0(Trait,".fitted"), .funs = mean)
+    ftmean = as.data.frame(ftmean)
+    rownames(ftmean) = ftmean$geno
+    ##########################################################
+    # This part did not work since it requieres a lot of memory
+    # prsp = predict.mmer(mixcombsp,classify = "geno")
+    # pmsp = prsp$pvals[,1:3]
+    # rownames(pmsp) = pmsp$geno
+    ##########################################################
+    ##Putting the mean data of the genotyeps in the matrix 
+    for(name in levels(met$geno)){
+    MAT[name,Trait] = as.numeric(ftmean[name,2])
+    }
+
+ }
+ )
+``` 

@@ -1,0 +1,115 @@
+---
+title: "SinglocNorLmer"
+author: "Tesfahun A. Setotaw"
+date: "2023-02-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# data import and cleaning 
+# set the working directory 
+setwd("/Users/tas286/Documents/GitHub/spatial_analysis")
+list.files()
+df = read.csv("data/phenotype.csv")
+head(df)
+# identify factor variables and change to factor
+library(metan)
+
+df = as_factor(.data = df, c(studyYear,locationName, germplasmName,replicate, blockNumber))
+df$R = as.factor(df$rowNumber)
+df$C = as.factor(df$colNumber)
+str(df)
+
+## Summarise the data
+
+summary(df)
+library(dplyr)
+library(ggplot2)
+colnames(df)
+colnames(df)[31] = "Gr_protein"
+colnames(df)[32] = "test_weight"
+colnames(df)[33] = "Yield"
+df %>% group_by(germplasmName,locationName) %>% summarize_at(.vars = "Yield", .funs = c(min,max,mean))
+ggplot(df) +
+  geom_boxplot(mapping = aes(x = germplasmName, y = Yield)) +
+  facet_grid("locationName")
+
+out = boxplot.stats(df$Yield)$out
+out_ind <- which(df$Yield %in% c(out))
+out_ind
+df1 = df
+# analysis using lme4 package 
+df1 <- df1[order(df1$locationName,df1$colNumber,df1$rowNumber),] # to reorder the row and column
+
+# Standard file name for the script and factor variables 
+met = df1
+met$geno = met$germplasmName
+met$rep = met$replicate
+met$C  = met$C
+met$R = met$R
+met$col = met$colNumber
+met$row = met$rowNumber
+met$block = met$blockNumber
+met$env = met$studyYear:met$locationName
+met$env  = gsub(pattern = ":", replacement = "_", x = met$env)
+met$env =as.factor(met$env)
+```
+
+
+```{r}
+Traits <- c("Yield", "Gr_protein","test_weight") 
+
+######################
+# output storage - 
+######################
+
+r = length(levels(met$rep))
+Env<-levels(met$env)
+ne<-length(levels(met$env)) # the number of the environment year:loc or location
+nt<-length(Traits) # number of traits 
+# Heritability estimate 
+Result_lmer.h2 <- matrix(nrow = ne, ncol = nt) # the matrix to put the h2
+colnames(Result_lmer.h2) <- Traits
+rownames(Result_lmer.h2) <- Env
+
+# BLUP mean
+Result.MeanBLUP <- vector(mode = "list", length = length(Env)) 
+names(Result.MeanBLUP) <- Env
+
+
+
+library(lme4)
+for (i in 1:ne){
+  SL <- droplevels(subset(x = met, subset = env == Env[i]) )# Subseting the data for each env
+  TraitN = colnames(SL[Traits])[colSums(is.na(SL[Traits])) < 25] # selecting the trait without NA
+  ntt = length((TraitN))
+  gen = length(levels(SL$geno))
+  MAT <- matrix(nrow = gen, ncol = ntt) # create matrix based on the number of traits
+  colnames(MAT)<- TraitN
+  rownames(MAT) <- sort(levels(SL$geno))
+  
+  for (Trait in TraitN){
+    eval(parse(text = paste("mix = lmer(formula = ",Trait," ~ (1|geno) + (1|rep), data = SL)")))
+    
+    s1<-VarCorr(mix)
+    s2 <- data.frame(s1)
+    rownames(s2) <- c("geno", "rep", "Residual")
+    v.e1 <-s2["Residual", "vcov"]
+    v.g1 <-s2["geno", "vcov"]
+    Result_lmer.h2[i,Trait]<- round(v.g1/(v.g1 + v.e1/r),3)
+    cf = coefficients(mix)
+    dim(cf$geno)
+    for(name in seq(levels(SL$geno))){
+
+    MAT[name,Trait] = cf$geno[name,1]
+    
+    }
+Result.MeanBLUP[[i]] <- MAT
+    
+  }
+}
+```
