@@ -1,0 +1,267 @@
+---
+title: "Cross validation for the trials- for looping for factor with marker and spatial
+  analysis"
+author: "Tesfahun A. Setotaw"
+date: "2023-03-17"
+output: html_document
+---
+
+```{r setup, setup}
+knitr::opts_knit$set(root.dir = "/Users/tas286/Documents/Data_geno_pheno_for_selected_trials")
+getwd()
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(root.dir = "/Users/tas286/Documents/Data_geno_pheno_for_selected_trials")
+getwd()
+
+
+```
+
+## Introduction
+
+This script is desinged to make cross validation analysis of the trials with marker and spatial information.
+
+```{r cars}
+# Load the packages necessary for the analysis
+library(tidyverse)
+library(sommer)
+library(caret)
+library(dplyr)
+library(lme4)
+#########################################
+# Import phenotype data 
+#######################################
+
+setwd("/Users/tas286/Documents/Data_geno_pheno_for_selected_trials")
+phen = read.csv("Phenotype_YldQt_Val_2014.csv" ) # replicated
+phen = read.csv("Phenotype_ABBmid_2014_Lexingoton_Woodford.csv") # single replicate
+head(phen)
+## Change the factor variable to factor
+set.seed(123)
+phen$geno = as.factor(phen$germplasmName)
+phen$rowf = as.factor(phen$rowNumber)
+phen$colf = as.factor(phen$colNumber)
+phen$col = phen$colNumber
+phen$row = phen$rowNumber
+phen$loc = as.factor(phen$locationName)
+phen$Test_weight = phen$Grain.test.weight...g.l.CO_321.0001210
+phen$Grain_Yield = phen$Grain.yield...kg.ha.CO_321.0001218
+phen$Plant_height = phen$Plant.height...cm.CO_321.0001301
+
+str(phen)
+# colnames(phen)[37] = "Grain_protein"
+# colnames(phen)[31] = "Test_weight"
+# colnames(phen)[32] = "Grain_Yield"
+# colnames(phen)[34] = "Plant_height"
+#"Plant_height","Test_weight"
+Traits = c( "Grain_Yield" ,"Plant_height","Test_weight")
+dim(phen)
+length(levels(phen$loc))
+##############################################
+# Read the SNPs data of the genotypes from VCF format and change to dosage
+##############################################
+
+library(vcfR) # load the vcfR package
+snps = read.vcfR(file ="Imputed_data/Imputed/YldQT_Val_2014_Imputed.vcf") # unreplicated
+snps2 = read.vcfR(file = "Imputed_data/Imputed/ABBmid_2014_Blacksburg_Warsaw_immputed.vcf") # replicated
+head(snps[,1:20])
+
+snps_num <- vcfR::extract.gt(snps,
+                             element = "GT",
+                             IDtoRowNames  = T, # to list the row name or not
+                             as.numeric = T,
+                             convertNA = T
+)
+
+
+snps <- t(snps_num)
+
+####################################
+# PCA analysis
+###################################
+library(FactoMineR)
+PCA(snps)
+
+```
+
+## Spliting the data as training and testing set and Analysis
+
+In this section the data will be divided as training and testing set for the 5 fold cross validation. 
+
+```{r pressure, echo=FALSE}
+########################################33333#############
+# Grouping the training and testing set for 5 fold validation
+#  Preparing tibbles for output storage
+
+# the tibble to store the predictability output from the model
+pr_y = tibble()
+
+# The tibble to store the Root Mean Squared Error (RMSQ)  and Mean Absolute Error (MAD)
+Accu = tibble()
+ # heritability estimate 
+ H2_Trait = tibble()
+
+A1 = A.mat(snps) # The addative relationship matrix
+dim(A1)
+A1 = (1-0.05)*A1 + (0.05)*diag(length(rownames(A1))) # to void singlualrity 
+all(rownames(A1)%in% phen$geno)
+
+indm = rownames(A1) %in% phen$geno
+A1 = A1[indm, indm]
+indp = phen$geno %in% rownames(A1)
+phen = phen[indp,]
+all(phen$geno %in% rownames(A1))
+phen$rep = as.factor(phen$replicate)
+Env = levels(phen$loc)
+dim(phen)
+length(levels(phen$geno))
+
+for(env in Env){
+  SL <- subset(x = phen, subset = loc == env) # Subseting the data for each env
+  TraitN = colnames(SL[Traits])[colSums(is.na(SL[Traits])) < 25] # selecting the trait 
+  
+  ntt = length((TraitN))
+  head(SL)
+  
+for(Trait in TraitN){
+   
+#Choosing the method of outlier testing for replicated and unreplicated trials 
+if(length(SL$rep)/length(levels(SL$geno)) <= 1){
+     # removing outlier using boxplotstat for unreplicated trials 
+out_ind <- which(SL[,paste(Trait)] %in% boxplot.stats(SL[,paste(Trait)])$out)
+
+if(length(out_ind) == 0){
+  SL = SL}else{
+    
+  SL = SL[-out_ind,]
+}
+
+}else{
+    #removing outlier for replicated trials 
+      eval(parse(text = paste("outl1 <- lmer(",Trait,"~(1|geno),
+               data= SL)")))
+
+      outlier = which(stats::rstudent(outl1) > 3)
+      SL = SL[-outlier,]
+}
+  # Creating a folder that contain 5 subset with 100 times with a total of 500
+  fold5 = caret::createMultiFolds(y = !is.na(SL[,Trait]), k = 5, times = 3)
+ 
+
+  for(i in 1:length(fold5)){
+    index = fold5[[i]] # the index of the sample for training set
+    #subset the phenotypic data
+    train.data <- droplevels(SL %>%
+                               filter(row_number() %in% index)) # subset the training set
+    dim(train.data)
+    test.data <- droplevels(SL %>%
+                              filter(!row_number() %in% index)) # subset the testing set
+    dim(test.data)
+
+    test.data[,TraitN] = NA # change the grain yield of the training set to NA value
+
+    mod_dat = rbind(train.data, test.data) # combine the the data set for analysis
+
+
+    eval(parse(text = paste("ans1 <- mmer(",Trait,"~1,
+               random=~vsr(geno, Gu=A1) +
+                vsr(rowf) +
+                vsr(colf) +
+                 spl2Da(row,col),
+               rcov=~vsr(units),
+               data= mod_dat)")))
+  r = length(levels(as.factor(mod_dat$replicate)))
+  ss = summary(ans1)
+  vc = data.frame(ss$varcomp)
+  
+  rownames(vc) <- c("geno","rowf","colf","All", "residual")
+  h2 = cbind(location = paste(env),Trait = paste(Trait),
+                heritability = round(vc["geno","VarComp"]/(vc["geno", "VarComp"] + (vc["residual", "VarComp"])/r),3))
+    
+  
+  H2_Trait = rbind(H2_Trait,h2) # store the heritability in the tibble 
+
+
+    ### Extract the effects of the factor variables in the model
+    reff = randef(object = ans1)
+    reffd = data.frame(reff$`u:geno`) 
+    prd = reffd + as.vector(ans1$Beta["Estimate"]) # BLUPs of the genotypes 
+    ind = which(rownames(prd) %in% test.data$geno) # indentify the genotypes in the test set from the predicted value
+    dim(test.data)
+    pred_levl = as.character(rownames(prd)[ind]) # The levels of genotypes in the predicted table
+    all(test.data$geno %in% pred_levl) # Subset the genotypes from the test data
+    length(levels(geno_test.set)) # the number of the genotyeps in test.set
+
+    pr1 = prd %>% filter(rownames(prd) %in% pred_levl) # filtering the predicted value based on the geno_commun
+    ts1 = SL %>% filter(geno %in% pred_levl) # filtering the observed value of the test.set
+
+    ts2 = ts1 %>% group_by(geno) %>%
+      summarise_at(.vars = paste(Trait), .funs = mean) # Estimate teh mean of the test.set for the trait of interest
+    ts2 = as.data.frame(ts2)
+    # Estimate the RMSE (Root mean square error) and MAE (mean absolute error) vlaues between the predicted and observed value
+    trt = paste(Trait)
+    RM = cbind(location = paste(env),Trait = paste(Trait),RMSE = round(RMSE(pr1$predicted.value, ts2[,trt]),3),
+               MAE = round(MAE(pr1$predicted.value, ts2[,trt]),3))
+    # Estimate the predictability among the estiamted and predicted value
+    preid = cbind(location = paste(env),Trait = paste(Trait),
+                  predictability = round(cor(pr1[,paste(Trait)],
+                                             ts2[,trt],
+                                             use = "pairwise.complete.obs"),3)) # estimate the correlation of the obseved and the predicted value
+
+    Accu = rbind(Accu,RM) # store the measure of accuracy in tibble
+    pr_y = rbind(pr_y,preid) # store model predictability in tibble
+
+}
+}
+  }
+
+```
+
+#Write the output in excel
+```{r}
+out = list(Accuracy = Accu, Predictability = pr_y, Heritability = H2_Trait)
+out = cbind(Accu,pr_y)
+library(openxlsx)
+write.xlsx(x = out, file = "outputs_March2021/Result_with_marker_and_with_spatial_YldQt_Val_2014.xlsx")
+
+mean(as.numeric(pr_y$predictability), na.rm = T)
+
+
+```
+
+```{r}
+########################################################################################
+# Plot the outputs 
+#########################################################################################
+library(ggplot2)
+library(readxl)
+predictrep <- read_excel("outputs_March2021/Result_with_marker_and_spatial_Analysis_YldQt_Val_2014.xlsx", 
+sheet = "Predictability")
+predictwo <- read_excel("outputs_March2021/Result_with_marker_and_without_spatial_Analysis_YldQt_Val_2014.xlsx", 
+sheet = "Predictability")
+
+
+predictrep$predictability = as.numeric(predictrep$predictability)
+predictrep$rep = "replicated"
+predictrep$spatial = "With Spatial"
+predictwo$predictability = as.numeric(predictwo$predictability)
+predictwo$rep = "unreplicated"
+predictwo$spatial = "Without Spatial"
+# combine the data 
+predsp = rbind(predictrep,predictwo)
+predsp$rep = as.factor(predsp$rep)
+predsp$spatial 
+
+length(levels(as.factor(predsp$location)))
+
+ggplot(predsp) + 
+  geom_boxplot(aes(x= Trait, y=predictability, fill= Trait))+
+  theme_bw() + facet_grid(spatial~location)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Predictability of Trial YldQt_Val_2014")
+ 
+
+```
+
