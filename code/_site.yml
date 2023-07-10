@@ -1,0 +1,10 @@
+name: "WrangleT3Datasets"
+output_dir: ../docs
+navbar:
+  title: "WrangleT3Datasets"
+output:
+  workflowr::wflow_html:
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+    highlight: textmate

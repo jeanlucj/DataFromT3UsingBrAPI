@@ -1,0 +1,81 @@
+---
+title: "GetPhenoTrialDataFromT3"
+author: "Jean-Luc Jannink"
+date: "2023-07-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Use here and BrAPI helper
+```{r libraries}
+library(tidyverse)
+here::i_am("code/GetPhenoTrialDataWithBrAPI.Rmd")
+download.file("https://wheat.triticeaetoolbox.org/static_content/files/brapi/brapi.R", here::here("code", "brapi.R"))
+source(here::here("code", "brapi.R"))
+brapi$server <- "wheat.triticeaetoolbox.org"
+```
+
+## Function to get a phenotypic study from a BrAPI server
+```{r get a study}
+getStudy <- function(studyName, traits=NULL){
+  studyMeta <- brapi$get("studies",
+                         query=list(studyName=studyName))
+  # YldQtl-Val_2014_Sydney (5839) does not give proper metadate response
+  studyDbId <- studyMeta$content$result$data[[1]]$studyDbId
+  study <- brapi$get("observations", 
+                     query=list(studyDbId=studyDbId))
+  nRec <- study$content$metadata$pagination$totalCount
+  study <- brapi$get("observations", 
+                     query=list(studyDbId=studyDbId), 
+                     pageSize=nRec)
+  phenoDat <- study$content$result$data
+  
+  toRet <- dplyr::tibble()
+  addToTib <- function(pDl){
+    toRet <<- dplyr::bind_rows(toRet, c(studyName=studyName, 
+                               pDl[c("observationUnitName", 
+                                     "germplasmName", 
+                                     "observationVariableName", 
+                                     "value")]))
+  }
+  d <- sapply(phenoDat, addToTib)
+  extractPlotNo <- function(plotNames){
+    res <- sapply(plotNames, 
+                  function(pn) as.numeric(dplyr::last(strsplit(pn, "_")[[1]])))
+    return(res)
+  }
+  toRet <- toRet %>% 
+    dplyr::mutate(plotNumber = extractPlotNo(observationUnitName)) %>%
+    arrange(plotNumber)
+  
+  if (!is.null(traits)){
+    toKeep <- NULL
+    for (trait in traits){
+      toKeep <- union(toKeep, grep(trait, toRet$observationVariableName))
+    }
+    toRet <- dplyr::slice(toRet, sort(toKeep))
+  }
+  return(toRet)
+}
+```
+
+## Get phenotypic data from T3 using BrAPI
+After this `allPhenoData` is a long tibble with yield, test weight, and height
+```{r assemble studies}
+studies <- c("YldQtl-Val_2014_ClayCenter",
+             "YldQtl-Val_2014_Lincoln",
+             "YldQtl-Val_2014_Mead",
+             "YldQtl-Val_2014_Sidney")
+allPhenoData <- tibble()
+
+for (studyName in studies){
+  oneTrial <- getStudy(studyName, traits=c("yield", "height", "weight"))
+  allPhenoData <- dplyr::bind_rows(allPhenoData, oneTrial)
+}
+readr::write_csv(allPhenoData, 
+                 here::here("data", "multitrialPhenoDataBrAPI.csv"))
+```
+

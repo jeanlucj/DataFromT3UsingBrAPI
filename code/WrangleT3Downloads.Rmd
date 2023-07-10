@@ -1,0 +1,120 @@
+---
+title: "WrangleT3Downloads"
+author: "Jean-Luc Jannink"
+date: "2023-07-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load libraries
+```{r libraries}
+library(tidyverse)
+here::i_am("code/WrangleT3Downloads.Rmd")
+```
+
+## Simple function to impute missing data
+```{r impute with glmnet}
+# You enter the function with a matrix, individuals in rows, markers in columns
+# It returns a matrix of the same dimensions but with no missing data
+# I have only tested it with markers coded as -1, 0, 1 for AA, AB, and BB, but
+# other codings would probably work too.
+# Returns a matrix of the same dimensions, but with no missing data.
+# Imputed values are real numbers (not integers). This may be problematic for
+# some downstream mapping software.
+# by default glmnet will look at ~100 different lambda penalty coefficients.
+# It approximately doubles the speed to look at only 10 values. That probably
+# lowers the accuracy by a couple percent, but not much more.
+# Another thing that ~ doubles the speed is to do  5-fold rather than 10-fold cv
+# The thing that makes the most difference is not putting ALL the other
+# markers in as predictors, but only the top xx of them. I am using 60 now.
+impute.glmnet <- function(matNA){
+  require(glmnet)
+
+  cvLambda <- exp(-(2:11))
+  # Start with mean impute
+  matNoNA <- apply(matNA, 2, 
+                   function(v) {v[is.na(v)] <- mean(v, na.rm=TRUE); return(v)})
+  # I am using 60 markers for prediction.
+  # Make sure nPred less than number of markers in the matrix.
+  nPred <- min(60, round(ncol(matNA) * 0.5))
+  # Function to fill in one column with glmnet impute
+  imputeMrk <- function(k){
+    # Prevent imputations from going outside the original range
+    varRange <- range(matNA[,k], na.rm=TRUE)
+    isNA <- is.na(matNA[,k])
+    # If the marker is monomorphic, impute with the sole value
+    if (sd(matNA[,k], na.rm=TRUE) == 0){
+      matNoNA[isNA,k] <<- matNA[which(!isNA)[1],k] 
+    } else{
+      corMrk <- abs(cov(matNA[,k], matNA, use="pairwise.complete.obs"))
+      # Retain markers that correlate highly with marker to be imputed
+      predMrk <- setdiff(order(corMrk,decreasing=TRUE)[1:nPred], k)
+      cvModels <- cv.glmnet(x=matNoNA[!isNA,predMrk], 
+                            y=matNA[!isNA,k], nfolds=5, lambda=cvLambda)
+      pred <- predict(cvModels, s="lambda.min", 
+                      newx=matNoNA[isNA,predMrk, drop=FALSE])
+      pred[pred < varRange[1]] <- varRange[1]
+      pred[pred > varRange[2]] <- varRange[2]
+      matNoNA[isNA,k] <<- pred
+    }
+    return(k)
+  }
+  # Go in order from least to most missing (probably not really needed)
+  sumIsNA <- apply(matNA, 2, function(v) sum(is.na(v)))
+  imputeOrder <- order(sumIsNA)
+  # Don't impute if none missing
+  imputeOrder <- imputeOrder[sumIsNA[imputeOrder] > 0]
+  dummy <- try(sapply(imputeOrder, imputeMrk), silent=TRUE)
+  return(matNoNA)
+}
+```
+
+## Read and wrangle the marker data  
+After this `mrkDatT` is a tibble with accessions in rows and markers in columns
+It has missing data. Markers are scored as -1 or 1 (no heterozygot scores)
+`mrkDatNoNA` is a matrix. Same scoring but all missing marker data imputed
+```{r read marker data}
+mrkDat <- readr::read_tsv(
+  file=here::here("data", "BreedBaseGenotypesDownloadT3.tsv"))
+# Check what the different allele calls are
+mrkDat[,-1] %>% unlist %>% unique
+# Simple filtering to remove accessions and markers with too much missing data
+nIsNAbyMrk <- apply(mrkDat, 1, function(v) sum(is.na(v)))
+# Start by removing all markers that are all missing: that's just confusing
+mrkDat <- mrkDat[nIsNAbyMrk < 216,]
+# Remove markers and accessions with > 20% missing scores
+nIsNAbyMrk <- apply(mrkDat, 1, function(v) sum(is.na(v)))
+mrkDat <- mrkDat[nIsNAbyMrk / ncol(mrkDat) < 0.2,]
+nIsNAbyAcc <- apply(mrkDat, 2, function(v) sum(is.na(v)))
+mrkDat <- mrkDat[,nIsNAbyAcc / nrow(mrkDat) < 0.2]
+
+# I like having accessions in rows and markers in columns, so change it
+mrkDatT <- mrkDat %>% pivot_longer(cols= -1) %>% 
+  pivot_wider(names_from = "Marker", values_from = "value") %>% 
+  rename(accession = name)
+# I like having marker scores be -1, 0, 1
+mrkDatT[,-1] <- mrkDatT[,-1] - 1
+mrkDatNoNA <- impute.glmnet(mrkDatT[,-1])
+rownames(mrkDatNoNA) <- mrkDatT$accession
+```
+
+## Read and wrangle the phenotypic data  
+After this, `phenDat` is a tibble with columns for yield, test weight, and
+plant height
+```{r read phenotypic data}
+phenDat <- readr::read_csv(
+  file=here::here("data", "BreedBaseMultitrialPhenoDownloadT3.csv"), skip=3)
+phenDat <- phenDat %>% 
+  rename(yield = `Grain yield - kg/ha|CO_321:0001218`,
+         testWeight = `Grain test weight - g/l|CO_321:0001210`,
+         height = `Plant height - cm|CO_321:0001301`) %>% 
+  select(locationName, studyName, studyYear, germplasmName,
+         replicate, blockNumber, plotNumber,
+         rowNumber, colNumber,
+         yield, testWeight, height) %>%
+  arrange(locationName, replicate, plotNumber)
+```
+
