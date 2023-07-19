@@ -12,10 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Use here and BrAPI helper
 ```{r libraries}
 library(tidyverse)
+library(devtools)
 here::i_am("code/GetPhenoTrialDataWithBrAPI.Rmd")
-download.file("https://wheat.triticeaetoolbox.org/static_content/files/brapi/brapi.R", here::here("code", "brapi.R"))
-source(here::here("code", "brapi.R"))
-brapi$server <- "wheat.triticeaetoolbox.org"
+devtools::install_github("TriticeaeToolbox/BrAPI.R")
+library(BrAPI)
+brapi <- getBrAPIConnection("T3/Wheat")
 ```
 
 ## Function to get a phenotypic study from a BrAPI server
@@ -23,15 +24,11 @@ brapi$server <- "wheat.triticeaetoolbox.org"
 getStudy <- function(studyName, traits=NULL){
   studyMeta <- brapi$get("studies",
                          query=list(studyName=studyName))
-  # YldQtl-Val_2014_Sydney (5839) does not give proper metadate response
-  studyDbId <- studyMeta$content$result$data[[1]]$studyDbId
+  studyDbId <- studyMeta$data[[1]]$studyDbId
   study <- brapi$get("observations", 
-                     query=list(studyDbId=studyDbId))
-  nRec <- study$content$metadata$pagination$totalCount
-  study <- brapi$get("observations", 
-                     query=list(studyDbId=studyDbId), 
-                     pageSize=nRec)
-  phenoDat <- study$content$result$data
+                     query=list(studyDbId=studyDbId),
+                     page="all", pageSize=500)
+  phenoDat <- study$combined_data
   
   toRet <- dplyr::tibble()
   addToTib <- function(pDl){
