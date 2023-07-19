@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(devtools)
 here::i_am("code/GetPhenoTrialDataWithBrAPI.Rmd")
-devtools::install_github("TriticeaeToolbox/BrAPI.R")
+devtools::install_git("https://github.com/TriticeaeToolbox/BrAPI.R")
 library(BrAPI)
 brapi <- getBrAPIConnection("T3/Wheat")
 ```
