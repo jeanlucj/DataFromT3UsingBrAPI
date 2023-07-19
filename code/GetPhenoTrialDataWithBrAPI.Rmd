@@ -25,6 +25,24 @@ getStudy <- function(studyName, traits=NULL){
   studyMeta <- brapi$get("studies",
                          query=list(studyName=studyName))
   studyDbId <- studyMeta$data[[1]]$studyDbId
+
+  plots <- brapi$get("observationunits",
+                    query=list(studyDbId=studyDbId),
+                    page="all", pageSize=100)
+  plot_info <- list()
+  for ( plot in plots$combined_data ) {
+    info <- list(
+      id = plot$observationUnitDbId,
+      row = plot$observationUnitPosition$positionCoordinateY,
+      col = plot$observationUnitPosition$positionCoordinateX
+    )
+    # this is where plot (number), replicate, and block are held
+    for ( olr in plot$observationUnitPosition$observationLevelRelationships ) {
+      info[[olr$levelName]] <- olr$levelCode
+    }
+    plot_info[[plot$observationUnitName]] <- info
+  }
+
   study <- brapi$get("observations", 
                      query=list(studyDbId=studyDbId),
                      page="all", pageSize=500)
@@ -36,16 +54,15 @@ getStudy <- function(studyName, traits=NULL){
                                pDl[c("observationUnitName", 
                                      "germplasmName", 
                                      "observationVariableName", 
-                                     "value")]))
+                                     "value")],
+                               plotNumber=plot_info[[pDl$observationUnitName]]$plot,
+                               replicate=plot_info[[pDl$observationUnitName]]$replicate,
+                               block=plot_info[[pDl$observationUnitName]]$block,
+                               row=plot_info[[pDl$observationUnitName]]$row,
+                               col=plot_info[[pDl$observationUnitName]]$col))
   }
   d <- sapply(phenoDat, addToTib)
-  extractPlotNo <- function(plotNames){
-    res <- sapply(plotNames, 
-                  function(pn) as.numeric(dplyr::last(strsplit(pn, "_")[[1]])))
-    return(res)
-  }
   toRet <- toRet %>% 
-    dplyr::mutate(plotNumber = extractPlotNo(observationUnitName)) %>%
     arrange(plotNumber)
   
   if (!is.null(traits)){
