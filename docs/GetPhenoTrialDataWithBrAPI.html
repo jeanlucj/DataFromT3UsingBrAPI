@@ -15,7 +15,7 @@
 
 <title>GetPhenoTrialDataFromT3</title>
 
-<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -353,7 +353,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -364,8 +364,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -374,17 +374,16 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-07-09
+<strong>Last updated:</strong> 2023-07-19
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong>
-<code>~/Documents/GitRepo/GSdatasetsFromT3/</code> <span
+<strong>Knit directory:</strong> <code>~/Desktop/data/</code> <span
 class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
@@ -404,21 +403,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -509,15 +505,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomTesfahun54spatialanalysisupdatedtree40648eb79b5f941acd18043d9da2b3aa0ea30e02targetblank40648eba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomTriticeaeToolboxDataFromT3UsingBrAPItree01433407a895c96fff59a1fcffee0e03f333e481targetblank0143340a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/Tesfahun54/spatial_analysis_updated/tree/40648eb79b5f941acd18043d9da2b3aa0ea30e02" target="_blank">40648eb</a>
+<a href="https://github.com/TriticeaeToolbox/DataFromT3UsingBrAPI/tree/01433407a895c96fff59a1fcffee0e03f333e481" target="_blank">0143340</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomTesfahun54spatialanalysisupdatedtree40648eb79b5f941acd18043d9da2b3aa0ea30e02targetblank40648eba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomTriticeaeToolboxDataFromT3UsingBrAPItree01433407a895c96fff59a1fcffee0e03f333e481targetblank0143340a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -527,7 +523,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/Tesfahun54/spatial_analysis_updated/tree/40648eb79b5f941acd18043d9da2b3aa0ea30e02" target="_blank">40648eb</a>.
+<a href="https://github.com/TriticeaeToolbox/DataFromT3UsingBrAPI/tree/01433407a895c96fff59a1fcffee0e03f333e481" target="_blank">0143340</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -542,52 +538,7 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  .DS_Store
-    Untracked:  .gitignore
-    Untracked:  GSdatasetsFromT3.Rproj
-    Untracked:  _workflowr.yml
-    Untracked:  code/.DS_Store
-    Untracked:  code/GetPhenoTrialDataWithBrAPI.Rmd
-    Untracked:  code/WrangleT3Downloads.Rmd
-    Untracked:  code/_site.yml
-    Untracked:  code/brapi.R
-    Untracked:  data/.DS_Store
-    Untracked:  data/BreedBaseGenotypesDownloadT3.tsv
-    Untracked:  data/BreedbaseMultitrialPhenoDownloadT3.csv
-    Untracked:  data/MultitrialPhenoDataBrAPI.csv
-    Untracked:  output/.DS_Store
-
-Unstaged changes:
-    Deleted:    Spatial analysis_with_all_possibilities_final_with_Block.R
-    Deleted:    analysis/Analysis_without_markers_without_spatial_analysis_using_predict_fn_Final_with_sommer.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_with_markers_with_spatial_analysis_Genomic_selection_Final.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_with_markers_with_spatial_analysis_using_predict_fn_Final_with_sommer.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_with_markers_withno_spatial_analysis_Genomic_selection_Final.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_with_markers_without_spatial_analysis_using_predict_fn_Final_with_sommer.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_without_markers_with_spatial_analysis_using_predict_fn_Final_with_sommer.Rmd
-    Deleted:    analysis/DataCleaning.Rmd
-    Deleted:    analysis/SingleLocNorLme4.Rmd
-    Deleted:    analysis/SingleLocNorSommer.Rmd
-    Deleted:    analysis/SingleLocSpatialLMMsovler.Rmd
-    Deleted:    analysis/SingleLocSpatialSommer.Rmd
-    Deleted:    analysis/Sommer_with_Snp_data.R
-    Deleted:    analysis/_site.yml
-    Deleted:    analysis/about.Rmd
-    Deleted:    analysis/index.Rmd
-    Deleted:    analysis/license.Rmd
-    Deleted:    code/Genotype_and_phenotype_data_preparation for anlysis.R
-    Deleted:    code/README.md
-    Deleted:    data/Phenotype_YldQt_Val_2014.csv
-    Deleted:    data/README.md
-    Deleted:    data/YldQT_Val_2014_Imputed.vcf
-    Deleted:    data/phenotype.csv
-    Deleted:    data/wheat_trials_with_layouts_reps.csv
-    Deleted:    output/README.md
-    Deleted:    spatial_analysis_updated
 
 </code></pre>
 <p>
@@ -602,10 +553,126 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>code/GetPhenoTrialDataWithBrAPI.Rmd</code>) and HTML
+(<code>docs/GetPhenoTrialDataWithBrAPI.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/TriticeaeToolbox/DataFromT3UsingBrAPI/blob/01433407a895c96fff59a1fcffee0e03f333e481/code/GetPhenoTrialDataWithBrAPI.Rmd" target="_blank">0143340</a>
+</td>
+<td>
+David Waring
+</td>
+<td>
+2023-07-19
+</td>
+<td>
+Update BrAPI Git URL
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/TriticeaeToolbox/DataFromT3UsingBrAPI/blob/7424c7179bad3a29e600e652db2a8a02417987d0/code/GetPhenoTrialDataWithBrAPI.Rmd" target="_blank">7424c71</a>
+</td>
+<td>
+David Waring
+</td>
+<td>
+2023-07-19
+</td>
+<td>
+Get Data with BrAPI: get plot info
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/TriticeaeToolbox/DataFromT3UsingBrAPI/blob/2c9c5730371104f90c20a687d5283a0d4bf8d4d8/code/GetPhenoTrialDataWithBrAPI.Rmd" target="_blank">2c9c573</a>
+</td>
+<td>
+David Waring
+</td>
+<td>
+2023-07-19
+</td>
+<td>
+Get Data with BrAPI: use updated BrAPI Package
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/TriticeaeToolbox/DataFromT3UsingBrAPI/blob/9c44dd1dfc53a614058fdf7ed797d44446c4c1ee/code/GetPhenoTrialDataWithBrAPI.Rmd" target="_blank">9c44dd1</a>
+</td>
+<td>
+jeanlucj
+</td>
+<td>
+2023-07-10
+</td>
+<td>
+First commit with BrAPI code
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/TriticeaeToolbox/DataFromT3UsingBrAPI/9c44dd1dfc53a614058fdf7ed797d44446c4c1ee/docs/GetPhenoTrialDataWithBrAPI.html" target="_blank">9c44dd1</a>
+</td>
+<td>
+jeanlucj
+</td>
+<td>
+2023-07-10
+</td>
+<td>
+First commit with BrAPI code
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -623,11 +690,42 @@ There are no past versions. Publish this analysis with
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(devtools)</code></pre>
+<pre><code>Loading required package: usethis</code></pre>
 <pre class="r"><code>here::i_am(&quot;code/GetPhenoTrialDataWithBrAPI.Rmd&quot;)</code></pre>
-<pre><code>here() starts at /Users/jj332/Documents/GitRepo/GSdatasetsFromT3</code></pre>
-<pre class="r"><code>download.file(&quot;https://wheat.triticeaetoolbox.org/static_content/files/brapi/brapi.R&quot;, here::here(&quot;code&quot;, &quot;brapi.R&quot;))
-source(here::here(&quot;code&quot;, &quot;brapi.R&quot;))
-brapi$server &lt;- &quot;wheat.triticeaetoolbox.org&quot;</code></pre>
+<pre><code>here() starts at /home/david/Desktop/data</code></pre>
+<pre class="r"><code>devtools::install_git(&quot;https://github.com/TriticeaeToolbox/BrAPI.R&quot;)</code></pre>
+<pre><code>Downloading git repo https://github.com/TriticeaeToolbox/BrAPI.R</code></pre>
+<pre><code>
+── R CMD build ─────────────────────────────────────────────────────────────────
+  
+   checking for file ‘/tmp/RtmpqbRE1m/file373a518ad6109/DESCRIPTION’ ...
+  
+✔  checking for file ‘/tmp/RtmpqbRE1m/file373a518ad6109/DESCRIPTION’
+
+  
+─  preparing ‘BrAPI’:
+   checking DESCRIPTION meta-information ...
+  
+✔  checking DESCRIPTION meta-information
+
+  
+─  checking for LF line-endings in source and make files and shell scripts
+
+  
+─  checking for empty or unneeded directories
+
+  
+─  building ‘BrAPI_0.2.tar.gz’
+
+  
+   
+</code></pre>
+<pre><code>Installing package into &#39;/home/david/R/x86_64-pc-linux-gnu-library/4.1&#39;
+(as &#39;lib&#39; is unspecified)</code></pre>
+<pre class="r"><code>library(BrAPI)</code></pre>
+<pre><code>Loading required package: httr</code></pre>
+<pre class="r"><code>brapi &lt;- getBrAPIConnection(&quot;T3/Wheat&quot;)</code></pre>
 </div>
 <div id="function-to-get-a-phenotypic-study-from-a-brapi-server"
 class="section level2">
@@ -635,15 +733,29 @@ class="section level2">
 <pre class="r"><code>getStudy &lt;- function(studyName, traits=NULL){
   studyMeta &lt;- brapi$get(&quot;studies&quot;,
                          query=list(studyName=studyName))
-  # YldQtl-Val_2014_Sydney (5839) does not give proper metadate response
-  studyDbId &lt;- studyMeta$content$result$data[[1]]$studyDbId
+  studyDbId &lt;- studyMeta$data[[1]]$studyDbId
+
+  plots &lt;- brapi$get(&quot;observationunits&quot;,
+                    query=list(studyDbId=studyDbId),
+                    page=&quot;all&quot;, pageSize=100)
+  plot_info &lt;- list()
+  for ( plot in plots$combined_data ) {
+    info &lt;- list(
+      id = plot$observationUnitDbId,
+      row = plot$observationUnitPosition$positionCoordinateY,
+      col = plot$observationUnitPosition$positionCoordinateX
+    )
+    # this is where plot (number), replicate, and block are held
+    for ( olr in plot$observationUnitPosition$observationLevelRelationships ) {
+      info[[olr$levelName]] &lt;- olr$levelCode
+    }
+    plot_info[[plot$observationUnitName]] &lt;- info
+  }
+
   study &lt;- brapi$get(&quot;observations&quot;, 
-                     query=list(studyDbId=studyDbId))
-  nRec &lt;- study$content$metadata$pagination$totalCount
-  study &lt;- brapi$get(&quot;observations&quot;, 
-                     query=list(studyDbId=studyDbId), 
-                     pageSize=nRec)
-  phenoDat &lt;- study$content$result$data
+                     query=list(studyDbId=studyDbId),
+                     page=&quot;all&quot;, pageSize=500)
+  phenoDat &lt;- study$combined_data
   
   toRet &lt;- dplyr::tibble()
   addToTib &lt;- function(pDl){
@@ -651,16 +763,15 @@ class="section level2">
                                pDl[c(&quot;observationUnitName&quot;, 
                                      &quot;germplasmName&quot;, 
                                      &quot;observationVariableName&quot;, 
-                                     &quot;value&quot;)]))
+                                     &quot;value&quot;)],
+                               plotNumber=plot_info[[pDl$observationUnitName]]$plot,
+                               replicate=plot_info[[pDl$observationUnitName]]$replicate,
+                               block=plot_info[[pDl$observationUnitName]]$block,
+                               row=plot_info[[pDl$observationUnitName]]$row,
+                               col=plot_info[[pDl$observationUnitName]]$col))
   }
   d &lt;- sapply(phenoDat, addToTib)
-  extractPlotNo &lt;- function(plotNames){
-    res &lt;- sapply(plotNames, 
-                  function(pn) as.numeric(dplyr::last(strsplit(pn, &quot;_&quot;)[[1]])))
-    return(res)
-  }
   toRet &lt;- toRet %&gt;% 
-    dplyr::mutate(plotNumber = extractPlotNo(observationUnitName)) %&gt;%
     arrange(plotNumber)
   
   if (!is.null(traits)){
@@ -688,42 +799,186 @@ for (studyName in studies){
   oneTrial &lt;- getStudy(studyName, traits=c(&quot;yield&quot;, &quot;height&quot;, &quot;weight&quot;))
   allPhenoData &lt;- dplyr::bind_rows(allPhenoData, oneTrial)
 }</code></pre>
-<pre><code>Response [https://wheat.triticeaetoolbox.org/brapi/v2/studies?studyName=YldQtl-Val_2014_ClayCenter&amp;page=0&amp;pageSize=10]
+<pre><code>Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/studies?studyName=YldQtl-Val_2014_ClayCenter&amp;page=0&amp;pageSize=10&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=6104&amp;page=0&amp;pageSize=10]
+  Pagination: page 0 of 1 [pageSize = 10]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=6104&amp;page=0&amp;pageSize=100&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=6104&amp;page=0&amp;pageSize=1759]
+  Pagination: page 0 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=6104&amp;page=1&amp;pageSize=100&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/studies?studyName=YldQtl-Val_2014_Lincoln&amp;page=0&amp;pageSize=10]
+  Pagination: page 1 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=6104&amp;page=2&amp;pageSize=100&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=0&amp;pageSize=10]
+  Pagination: page 2 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=6104&amp;page=3&amp;pageSize=100&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=0&amp;pageSize=3516]
+  Pagination: page 3 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=6104&amp;page=4&amp;pageSize=100&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/studies?studyName=YldQtl-Val_2014_Mead&amp;page=0&amp;pageSize=10]
+  Pagination: page 4 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=6104&amp;page=0&amp;pageSize=500&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5656&amp;page=0&amp;pageSize=10]
+  Pagination: page 0 of 4 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=6104&amp;page=1&amp;pageSize=500&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5656&amp;page=0&amp;pageSize=2901]
+  Pagination: page 1 of 4 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=6104&amp;page=2&amp;pageSize=500&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/studies?studyName=YldQtl-Val_2014_Sidney&amp;page=0&amp;pageSize=10]
+  Pagination: page 2 of 4 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=6104&amp;page=3&amp;pageSize=500&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5839&amp;page=0&amp;pageSize=10]
+  Pagination: page 3 of 4 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/studies?studyName=YldQtl-Val_2014_Lincoln&amp;page=0&amp;pageSize=10&gt;
   Success: (200) OK
   Content Type: application/json
-Response [https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5839&amp;page=0&amp;pageSize=1320]
+  Pagination: page 0 of 1 [pageSize = 10]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5988&amp;page=0&amp;pageSize=100&gt;
   Success: (200) OK
-  Content Type: application/json</code></pre>
+  Content Type: application/json
+  Pagination: page 0 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5988&amp;page=1&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 1 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5988&amp;page=2&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 2 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5988&amp;page=3&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 3 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5988&amp;page=4&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 4 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=0&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 0 of 8 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=1&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 1 of 8 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=2&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 2 of 8 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=3&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 3 of 8 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=4&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 4 of 8 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=5&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 5 of 8 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=6&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 6 of 8 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5988&amp;page=7&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 7 of 8 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/studies?studyName=YldQtl-Val_2014_Mead&amp;page=0&amp;pageSize=10&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 0 of 1 [pageSize = 10]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5656&amp;page=0&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 0 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5656&amp;page=1&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 1 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5656&amp;page=2&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 2 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5656&amp;page=3&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 3 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5656&amp;page=4&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 4 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5656&amp;page=0&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 0 of 6 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5656&amp;page=1&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 1 of 6 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5656&amp;page=2&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 2 of 6 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5656&amp;page=3&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 3 of 6 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5656&amp;page=4&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 4 of 6 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5656&amp;page=5&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 5 of 6 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/studies?studyName=YldQtl-Val_2014_Sidney&amp;page=0&amp;pageSize=10&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 0 of 1 [pageSize = 10]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5839&amp;page=0&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 0 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5839&amp;page=1&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 1 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5839&amp;page=2&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 2 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5839&amp;page=3&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 3 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observationunits?studyDbId=5839&amp;page=4&amp;pageSize=100&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 4 of 5 [pageSize = 100]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5839&amp;page=0&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 0 of 3 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5839&amp;page=1&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 1 of 3 [pageSize = 500]
+Response [GET] &lt;https://wheat.triticeaetoolbox.org/brapi/v2/observations?studyDbId=5839&amp;page=2&amp;pageSize=500&gt;
+  Success: (200) OK
+  Content Type: application/json
+  Pagination: page 2 of 3 [pageSize = 500]</code></pre>
 <pre class="r"><code>readr::write_csv(allPhenoData, 
                  here::here(&quot;data&quot;, &quot;multitrialPhenoDataBrAPI.csv&quot;))</code></pre>
 <br>
@@ -735,43 +990,51 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.3.0 (2023-04-21)
-Platform: x86_64-apple-darwin20 (64-bit)
-Running under: macOS Ventura 13.4.1
+<pre><code>R version 4.1.2 (2021-11-01)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Pop!_OS 22.04 LTS
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
 
 locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-
-time zone: America/New_York
-tzcode source: internal
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] httr_1.4.6      lubridate_1.9.2 forcats_1.0.0   stringr_1.5.0  
- [5] dplyr_1.1.2     purrr_1.0.1     readr_2.1.4     tidyr_1.3.0    
- [9] tibble_3.2.1    ggplot2_3.4.2   tidyverse_2.0.0
+ [1] BrAPI_0.2       httr_1.4.6      devtools_2.4.5  usethis_2.2.2  
+ [5] lubridate_1.9.2 forcats_1.0.0   stringr_1.5.0   dplyr_1.1.2    
+ [9] purrr_1.0.1     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   
+[13] ggplot2_3.4.2   tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.6       utf8_1.2.3       generics_0.1.3   stringi_1.7.12  
- [5] hms_1.1.3        digest_0.6.31    magrittr_2.0.3   timechange_0.2.0
- [9] evaluate_0.21    grid_4.3.0       fastmap_1.1.1    rprojroot_2.0.3 
-[13] workflowr_1.7.0  jsonlite_1.8.4   promises_1.2.0.1 fansi_1.0.4     
-[17] scales_1.2.1     jquerylib_0.1.4  cli_3.6.1        crayon_1.5.2    
-[21] rlang_1.1.1      bit64_4.0.5      munsell_0.5.0    withr_2.5.0     
-[25] cachem_1.0.8     yaml_2.3.7       parallel_4.3.0   tools_4.3.0     
-[29] tzdb_0.4.0       colorspace_2.1-0 httpuv_1.6.11    here_1.0.1      
-[33] curl_5.0.0       vctrs_0.6.2      R6_2.5.1         lifecycle_1.0.3 
-[37] git2r_0.32.0     bit_4.0.5        fs_1.6.2         vroom_1.6.3     
-[41] pkgconfig_2.0.3  pillar_1.9.0     bslib_0.4.2      later_1.3.1     
-[45] gtable_0.3.3     glue_1.6.2       Rcpp_1.0.10      xfun_0.39       
-[49] tidyselect_1.2.0 rstudioapi_0.14  knitr_1.43       htmltools_0.5.5 
-[53] rmarkdown_2.22   compiler_4.3.0  </code></pre>
+ [1] sass_0.4.7        pkgload_1.3.2.1   bit64_4.0.5       vroom_1.6.3      
+ [5] jsonlite_1.8.7    here_1.0.1        bslib_0.5.0       shiny_1.7.4.1    
+ [9] yaml_2.3.7        remotes_2.4.2.1   sessioninfo_1.2.2 pillar_1.9.0     
+[13] glue_1.6.2        digest_0.6.33     promises_1.2.0.1  colorspace_2.1-0 
+[17] htmltools_0.5.5   httpuv_1.6.11     pkgconfig_2.0.3   xtable_1.8-4     
+[21] scales_1.2.1      processx_3.8.2    whisker_0.4.1     later_1.3.1      
+[25] tzdb_0.4.0        timechange_0.2.0  git2r_0.32.0      generics_0.1.3   
+[29] ellipsis_0.3.2    cachem_1.0.8      withr_2.5.0       cli_3.6.1        
+[33] magrittr_2.0.3    crayon_1.5.2      mime_0.12         memoise_2.0.1    
+[37] evaluate_0.21     ps_1.7.5          fs_1.6.2          fansi_1.0.4      
+[41] pkgbuild_1.4.2    profvis_0.3.8     tools_4.1.2       prettyunits_1.1.1
+[45] hms_1.1.3         lifecycle_1.0.3   munsell_0.5.0     callr_3.7.3      
+[49] compiler_4.1.2    jquerylib_0.1.4   rlang_1.1.1       grid_4.1.2       
+[53] rstudioapi_0.15.0 htmlwidgets_1.6.2 miniUI_0.1.1.1    rmarkdown_2.23   
+[57] gtable_0.3.3      curl_5.0.1        R6_2.5.1          knitr_1.43       
+[61] bit_4.0.5         fastmap_1.1.1     utf8_1.2.3        workflowr_1.7.0  
+[65] rprojroot_2.0.3   desc_1.4.2        stringi_1.7.12    parallel_4.1.2   
+[69] Rcpp_1.0.11       vctrs_0.6.3       tidyselect_1.2.0  xfun_0.39        
+[73] urlchecker_1.0.1 </code></pre>
 </div>
 </div>
 
