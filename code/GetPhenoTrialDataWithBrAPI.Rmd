@@ -12,10 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Use here and BrAPI helper
 ```{r libraries}
 library(tidyverse)
+library(devtools)
 here::i_am("code/GetPhenoTrialDataWithBrAPI.Rmd")
-download.file("https://wheat.triticeaetoolbox.org/static_content/files/brapi/brapi.R", here::here("code", "brapi.R"))
-source(here::here("code", "brapi.R"))
-brapi$server <- "wheat.triticeaetoolbox.org"
+devtools::install_git("https://github.com/TriticeaeToolbox/BrAPI.R")
+library(BrAPI)
+brapi <- getBrAPIConnection("T3/Wheat")
 ```
 
 ## Function to get a phenotypic study from a BrAPI server
@@ -23,15 +24,29 @@ brapi$server <- "wheat.triticeaetoolbox.org"
 getStudy <- function(studyName, traits=NULL){
   studyMeta <- brapi$get("studies",
                          query=list(studyName=studyName))
-  # YldQtl-Val_2014_Sydney (5839) does not give proper metadate response
-  studyDbId <- studyMeta$content$result$data[[1]]$studyDbId
+  studyDbId <- studyMeta$data[[1]]$studyDbId
+
+  plots <- brapi$get("observationunits",
+                    query=list(studyDbId=studyDbId),
+                    page="all", pageSize=100)
+  plot_info <- list()
+  for ( plot in plots$combined_data ) {
+    info <- list(
+      id = plot$observationUnitDbId,
+      row = plot$observationUnitPosition$positionCoordinateY,
+      col = plot$observationUnitPosition$positionCoordinateX
+    )
+    # this is where plot (number), replicate, and block are held
+    for ( olr in plot$observationUnitPosition$observationLevelRelationships ) {
+      info[[olr$levelName]] <- olr$levelCode
+    }
+    plot_info[[plot$observationUnitName]] <- info
+  }
+
   study <- brapi$get("observations", 
-                     query=list(studyDbId=studyDbId))
-  nRec <- study$content$metadata$pagination$totalCount
-  study <- brapi$get("observations", 
-                     query=list(studyDbId=studyDbId), 
-                     pageSize=nRec)
-  phenoDat <- study$content$result$data
+                     query=list(studyDbId=studyDbId),
+                     page="all", pageSize=500)
+  phenoDat <- study$combined_data
   
   toRet <- dplyr::tibble()
   addToTib <- function(pDl){
@@ -39,16 +54,15 @@ getStudy <- function(studyName, traits=NULL){
                                pDl[c("observationUnitName", 
                                      "germplasmName", 
                                      "observationVariableName", 
-                                     "value")]))
+                                     "value")],
+                               plotNumber=plot_info[[pDl$observationUnitName]]$plot,
+                               replicate=plot_info[[pDl$observationUnitName]]$replicate,
+                               block=plot_info[[pDl$observationUnitName]]$block,
+                               row=plot_info[[pDl$observationUnitName]]$row,
+                               col=plot_info[[pDl$observationUnitName]]$col))
   }
   d <- sapply(phenoDat, addToTib)
-  extractPlotNo <- function(plotNames){
-    res <- sapply(plotNames, 
-                  function(pn) as.numeric(dplyr::last(strsplit(pn, "_")[[1]])))
-    return(res)
-  }
   toRet <- toRet %>% 
-    dplyr::mutate(plotNumber = extractPlotNo(observationUnitName)) %>%
     arrange(plotNumber)
   
   if (!is.null(traits)){
