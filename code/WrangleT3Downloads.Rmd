@@ -9,13 +9,23 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Load libraries
+## Load libraries.  
 ```{r libraries}
+packages_used <- c("tidyverse", "glmnet")
+ip <- installed.packages()
+all_packages_installed <- TRUE
+for (package in packages_used){
+  if (!(package %in% ip[,"Package"])){
+    print(paste("Please install package", package))
+    all_packages_installed <- FALSE
+  }
+}#END packages_used
+if (!all_packages_installed) stop("Need to install packages")
 library(tidyverse)
 here::i_am("code/WrangleT3Downloads.Rmd")
 ```
 
-## Simple function to impute missing data
+## Simple function to impute missing data.  
 ```{r impute with glmnet}
 # You enter the function with a matrix, individuals in rows, markers in columns
 # It returns a matrix of the same dimensions but with no missing data
@@ -74,8 +84,8 @@ impute.glmnet <- function(matNA){
 
 ## Read and wrangle the marker data  
 After this `mrkDatT` is a tibble with accessions in rows and markers in columns
-It has missing data. Markers are scored as -1 or 1 (no heterozygot scores)
-`mrkDatNoNA` is a matrix. Same scoring but all missing marker data imputed
+It has missing data. Markers are scored as -1 or 1 (no heterozygote scores)
+`mrkDatNoNA` is a matrix. Same scoring but all missing marker data imputed.  
 ```{r read marker data}
 mrkDat <- readr::read_tsv(
   file=here::here("data", "BreedBaseGenotypesDownloadT3.tsv"))
@@ -83,7 +93,7 @@ mrkDat <- readr::read_tsv(
 mrkDat[,-1] %>% unlist %>% unique
 # Simple filtering to remove accessions and markers with too much missing data
 nIsNAbyMrk <- apply(mrkDat, 1, function(v) sum(is.na(v)))
-# Start by removing all markers that are all missing: that's just confusing
+# Start by removing all markers that are 100% missing: that's just confusing
 mrkDat <- mrkDat[nIsNAbyMrk < 216,]
 # Remove markers and accessions with > 20% missing scores
 nIsNAbyMrk <- apply(mrkDat, 1, function(v) sum(is.na(v)))
@@ -99,15 +109,16 @@ mrkDatT <- mrkDat %>% pivot_longer(cols= -1) %>%
 mrkDatT[,-1] <- mrkDatT[,-1] - 1
 mrkDatNoNA <- impute.glmnet(mrkDatT[,-1])
 rownames(mrkDatNoNA) <- mrkDatT$accession
+dim(mrkDatNoNA)
 ```
 
 ## Read and wrangle the phenotypic data  
-After this, `phenDat` is a tibble with columns for yield, test weight, and
-plant height
+After this, `phenoDat` is a tibble with columns for yield, test weight, and
+plant height.  
 ```{r read phenotypic data}
-phenDat <- readr::read_csv(
+phenoDat <- readr::read_csv(
   file=here::here("data", "BreedBaseMultitrialPhenoDownloadT3.csv"), skip=3)
-phenDat <- phenDat %>% 
+phenoDat <- phenoDat %>% 
   rename(yield = `Grain yield - kg/ha|CO_321:0001218`,
          testWeight = `Grain test weight - g/l|CO_321:0001210`,
          height = `Plant height - cm|CO_321:0001301`) %>% 
@@ -116,5 +127,21 @@ phenDat <- phenDat %>%
          rowNumber, colNumber,
          yield, testWeight, height) %>%
   arrange(locationName, replicate, plotNumber)
-```
 
+
+nTrials <- phenoDat$studyName %>% unique %>% length
+nLocations <- phenoDat$locationName %>% unique %>% length
+nAccessions <- phenoDat$germplasmName %>% unique %>% length
+nTraits <- phenoDat$observationVariableName %>% unique %>% length
+nYieldPlots <- nrow(phenoDat) - phenoDat$yield %>% is.na %>% sum
+nHeightPlots <- nrow(phenoDat) - phenoDat$height %>% is.na %>% sum
+nTestWPlots <- nrow(phenoDat) - phenoDat$testWeight %>% is.na %>% sum
+
+phenoInfo <- tibble(variable=c("nTrials", "nLocations", 
+                               "nAccessions", "nTraits", 
+                               "nYieldPlots", "nHeightPlots", "nTestWPlots"),
+                    value=c(nTrials, nLocations, 
+                            nAccessions, nTraits, 
+                            nYieldPlots, nHeightPlots, nTestWPlots))
+phenoInfo  %>% rmarkdown::paged_table()
+```

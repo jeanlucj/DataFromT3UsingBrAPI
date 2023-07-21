@@ -37,6 +37,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -374,7 +376,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-07-09
+<strong>Last updated:</strong> 2023-07-20
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -384,7 +386,7 @@ aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong>
-<code>~/Documents/GitRepo/GSdatasetsFromT3/</code> <span
+<code>~/Documents/GitRepo/DataFromT3UsingBrAPI/</code> <span
 class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
@@ -413,10 +415,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -509,15 +511,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomTesfahun54spatialanalysisupdatedtree40648eb79b5f941acd18043d9da2b3aa0ea30e02targetblank40648eba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjeanlucjDataFromT3UsingBrAPItree059bc2b169aea120ba4c95fbc703defaa90c9bb2targetblank059bc2ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/Tesfahun54/spatial_analysis_updated/tree/40648eb79b5f941acd18043d9da2b3aa0ea30e02" target="_blank">40648eb</a>
+<a href="https://github.com/jeanlucj/DataFromT3UsingBrAPI/tree/059bc2b169aea120ba4c95fbc703defaa90c9bb2" target="_blank">059bc2b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomTesfahun54spatialanalysisupdatedtree40648eb79b5f941acd18043d9da2b3aa0ea30e02targetblank40648eba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomjeanlucjDataFromT3UsingBrAPItree059bc2b169aea120ba4c95fbc703defaa90c9bb2targetblank059bc2ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -527,7 +529,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/Tesfahun54/spatial_analysis_updated/tree/40648eb79b5f941acd18043d9da2b3aa0ea30e02" target="_blank">40648eb</a>.
+<a href="https://github.com/jeanlucj/DataFromT3UsingBrAPI/tree/059bc2b169aea120ba4c95fbc703defaa90c9bb2" target="_blank">059bc2b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -542,52 +544,15 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  .DS_Store
-    Untracked:  .gitignore
-    Untracked:  GSdatasetsFromT3.Rproj
-    Untracked:  _workflowr.yml
-    Untracked:  code/.DS_Store
-    Untracked:  code/GetPhenoTrialDataWithBrAPI.Rmd
-    Untracked:  code/WrangleT3Downloads.Rmd
-    Untracked:  code/_site.yml
-    Untracked:  code/brapi.R
-    Untracked:  data/.DS_Store
-    Untracked:  data/BreedBaseGenotypesDownloadT3.tsv
-    Untracked:  data/BreedbaseMultitrialPhenoDownloadT3.csv
-    Untracked:  data/MultitrialPhenoDataBrAPI.csv
-    Untracked:  output/.DS_Store
+    Ignored:    output/
 
 Unstaged changes:
-    Deleted:    Spatial analysis_with_all_possibilities_final_with_Block.R
-    Deleted:    analysis/Analysis_without_markers_without_spatial_analysis_using_predict_fn_Final_with_sommer.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_with_markers_with_spatial_analysis_Genomic_selection_Final.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_with_markers_with_spatial_analysis_using_predict_fn_Final_with_sommer.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_with_markers_withno_spatial_analysis_Genomic_selection_Final.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_with_markers_without_spatial_analysis_using_predict_fn_Final_with_sommer.Rmd
-    Deleted:    analysis/Corss_validation_for_trials_without_markers_with_spatial_analysis_using_predict_fn_Final_with_sommer.Rmd
-    Deleted:    analysis/DataCleaning.Rmd
-    Deleted:    analysis/SingleLocNorLme4.Rmd
-    Deleted:    analysis/SingleLocNorSommer.Rmd
-    Deleted:    analysis/SingleLocSpatialLMMsovler.Rmd
-    Deleted:    analysis/SingleLocSpatialSommer.Rmd
-    Deleted:    analysis/Sommer_with_Snp_data.R
-    Deleted:    analysis/_site.yml
-    Deleted:    analysis/about.Rmd
-    Deleted:    analysis/index.Rmd
-    Deleted:    analysis/license.Rmd
-    Deleted:    code/Genotype_and_phenotype_data_preparation for anlysis.R
-    Deleted:    code/README.md
-    Deleted:    data/Phenotype_YldQt_Val_2014.csv
-    Deleted:    data/README.md
-    Deleted:    data/YldQT_Val_2014_Imputed.vcf
-    Deleted:    data/phenotype.csv
-    Deleted:    data/wheat_trials_with_layouts_reps.csv
-    Deleted:    output/README.md
-    Deleted:    spatial_analysis_updated
+    Modified:   code/GetPhenoTrialDataWithBrAPI.Rmd
+    Modified:   code/WrangleT3Downloads.Rmd
+    Modified:   data/MultitrialPhenoDataBrAPI.csv
 
 </code></pre>
 <p>
@@ -602,17 +567,91 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>code/WrangleT3Downloads.Rmd</code>) and
+HTML (<code>docs/WrangleT3Downloads.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jeanlucj/DataFromT3UsingBrAPI/blob/9c44dd1dfc53a614058fdf7ed797d44446c4c1ee/code/WrangleT3Downloads.Rmd" target="_blank">9c44dd1</a>
+</td>
+<td>
+jeanlucj
+</td>
+<td>
+2023-07-10
+</td>
+<td>
+First commit with BrAPI code
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jeanlucj/DataFromT3UsingBrAPI/9c44dd1dfc53a614058fdf7ed797d44446c4c1ee/docs/WrangleT3Downloads.html" target="_blank">9c44dd1</a>
+</td>
+<td>
+jeanlucj
+</td>
+<td>
+2023-07-10
+</td>
+<td>
+First commit with BrAPI code
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
-<div id="load-libraries" class="section level2">
-<h2>Load libraries</h2>
-<pre class="r"><code>library(tidyverse)</code></pre>
+<div id="load-libraries." class="section level2">
+<h2>Load libraries.</h2>
+<pre class="r"><code>packages_used &lt;- c(&quot;tidyverse&quot;, &quot;glmnet&quot;)
+ip &lt;- installed.packages()
+all_packages_installed &lt;- TRUE
+for (package in packages_used){
+  if (!(package %in% ip[,&quot;Package&quot;])){
+    print(paste(&quot;Please install package&quot;, package))
+    all_packages_installed &lt;- FALSE
+  }
+}#END packages_used
+if (!all_packages_installed) stop(&quot;Need to install packages&quot;)
+library(tidyverse)</code></pre>
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.2     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
@@ -624,10 +663,11 @@ There are no past versions. Publish this analysis with
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 <pre class="r"><code>here::i_am(&quot;code/WrangleT3Downloads.Rmd&quot;)</code></pre>
-<pre><code>here() starts at /Users/jj332/Documents/GitRepo/GSdatasetsFromT3</code></pre>
+<pre><code>here() starts at /Users/jj332/Documents/GitRepo/DataFromT3UsingBrAPI</code></pre>
 </div>
-<div id="simple-function-to-impute-missing-data" class="section level2">
-<h2>Simple function to impute missing data</h2>
+<div id="simple-function-to-impute-missing-data."
+class="section level2">
+<h2>Simple function to impute missing data.</h2>
 <pre class="r"><code># You enter the function with a matrix, individuals in rows, markers in columns
 # It returns a matrix of the same dimensions but with no missing data
 # I have only tested it with markers coded as -1, 0, 1 for AA, AB, and BB, but
@@ -686,8 +726,8 @@ impute.glmnet &lt;- function(matNA){
 <h2>Read and wrangle the marker data</h2>
 <p>After this <code>mrkDatT</code> is a tibble with accessions in rows
 and markers in columns It has missing data. Markers are scored as -1 or
-1 (no heterozygot scores) <code>mrkDatNoNA</code> is a matrix. Same
-scoring but all missing marker data imputed</p>
+1 (no heterozygote scores) <code>mrkDatNoNA</code> is a matrix. Same
+scoring but all missing marker data imputed.</p>
 <pre class="r"><code>mrkDat &lt;- readr::read_tsv(
   file=here::here(&quot;data&quot;, &quot;BreedBaseGenotypesDownloadT3.tsv&quot;))</code></pre>
 <pre><code>Rows: 34135 Columns: 217
@@ -703,7 +743,7 @@ mrkDat[,-1] %&gt;% unlist %&gt;% unique</code></pre>
 <pre><code>[1] NA  2  0</code></pre>
 <pre class="r"><code># Simple filtering to remove accessions and markers with too much missing data
 nIsNAbyMrk &lt;- apply(mrkDat, 1, function(v) sum(is.na(v)))
-# Start by removing all markers that are all missing: that&#39;s just confusing
+# Start by removing all markers that are 100% missing: that&#39;s just confusing
 mrkDat &lt;- mrkDat[nIsNAbyMrk &lt; 216,]
 # Remove markers and accessions with &gt; 20% missing scores
 nIsNAbyMrk &lt;- apply(mrkDat, 1, function(v) sum(is.na(v)))
@@ -728,13 +768,15 @@ The following objects are masked from &#39;package:tidyr&#39;:
     expand, pack, unpack
 
 Loaded glmnet 4.1-7</code></pre>
-<pre class="r"><code>rownames(mrkDatNoNA) &lt;- mrkDatT$accession</code></pre>
+<pre class="r"><code>rownames(mrkDatNoNA) &lt;- mrkDatT$accession
+dim(mrkDatNoNA)</code></pre>
+<pre><code>[1]   215 18557</code></pre>
 </div>
 <div id="read-and-wrangle-the-phenotypic-data" class="section level2">
 <h2>Read and wrangle the phenotypic data</h2>
-<p>After this, <code>phenDat</code> is a tibble with columns for yield,
-test weight, and plant height</p>
-<pre class="r"><code>phenDat &lt;- readr::read_csv(
+<p>After this, <code>phenoDat</code> is a tibble with columns for yield,
+test weight, and plant height.</p>
+<pre class="r"><code>phenoDat &lt;- readr::read_csv(
   file=here::here(&quot;data&quot;, &quot;BreedBaseMultitrialPhenoDownloadT3.csv&quot;), skip=3)</code></pre>
 <pre><code>Rows: 1738 Columns: 34
 ── Column specification ────────────────────────────────────────────────────────
@@ -745,7 +787,7 @@ lgl  (6): plotWidth, plotLength, fieldSize, harvestDate, plantNumber, notes
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>phenDat &lt;- phenDat %&gt;% 
+<pre class="r"><code>phenoDat &lt;- phenoDat %&gt;% 
   rename(yield = `Grain yield - kg/ha|CO_321:0001218`,
          testWeight = `Grain test weight - g/l|CO_321:0001210`,
          height = `Plant height - cm|CO_321:0001301`) %&gt;% 
@@ -753,7 +795,30 @@ lgl  (6): plotWidth, plotLength, fieldSize, harvestDate, plantNumber, notes
          replicate, blockNumber, plotNumber,
          rowNumber, colNumber,
          yield, testWeight, height) %&gt;%
-  arrange(locationName, replicate, plotNumber)</code></pre>
+  arrange(locationName, replicate, plotNumber)
+
+
+nTrials &lt;- phenoDat$studyName %&gt;% unique %&gt;% length
+nLocations &lt;- phenoDat$locationName %&gt;% unique %&gt;% length
+nAccessions &lt;- phenoDat$germplasmName %&gt;% unique %&gt;% length
+nTraits &lt;- phenoDat$observationVariableName %&gt;% unique %&gt;% length</code></pre>
+<pre><code>Warning: Unknown or uninitialised column: `observationVariableName`.</code></pre>
+<pre class="r"><code>nYieldPlots &lt;- nrow(phenoDat) - phenoDat$yield %&gt;% is.na %&gt;% sum
+nHeightPlots &lt;- nrow(phenoDat) - phenoDat$height %&gt;% is.na %&gt;% sum
+nTestWPlots &lt;- nrow(phenoDat) - phenoDat$testWeight %&gt;% is.na %&gt;% sum
+
+phenoInfo &lt;- tibble(variable=c(&quot;nTrials&quot;, &quot;nLocations&quot;, 
+                               &quot;nAccessions&quot;, &quot;nTraits&quot;, 
+                               &quot;nYieldPlots&quot;, &quot;nHeightPlots&quot;, &quot;nTestWPlots&quot;),
+                    value=c(nTrials, nLocations, 
+                            nAccessions, nTraits, 
+                            nYieldPlots, nHeightPlots, nTestWPlots))
+phenoInfo  %&gt;% rmarkdown::paged_table()</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["variable"],"name":[1],"type":["chr"],"align":["left"]},{"label":["value"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"nTrials","2":"4"},{"1":"nLocations","2":"4"},{"1":"nAccessions","2":"220"},{"1":"nTraits","2":"0"},{"1":"nYieldPlots","2":"1737"},{"1":"nHeightPlots","2":"1738"},{"1":"nTestWPlots","2":"1268"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -792,15 +857,16 @@ loaded via a namespace (and not attached):
 [13] lifecycle_1.0.3  compiler_4.3.0   git2r_0.32.0     munsell_0.5.0   
 [17] codetools_0.2-19 httpuv_1.6.11    htmltools_0.5.5  sass_0.4.6      
 [21] yaml_2.3.7       later_1.3.1      pillar_1.9.0     crayon_1.5.2    
-[25] jquerylib_0.1.4  cachem_1.0.8     iterators_1.0.14 foreach_1.5.2   
-[29] tidyselect_1.2.0 digest_0.6.31    stringi_1.7.12   splines_4.3.0   
-[33] rprojroot_2.0.3  fastmap_1.1.1    grid_4.3.0       here_1.0.1      
-[37] colorspace_2.1-0 cli_3.6.1        magrittr_2.0.3   survival_3.5-5  
-[41] utf8_1.2.3       withr_2.5.0      scales_1.2.1     promises_1.2.0.1
-[45] bit64_4.0.5      timechange_0.2.0 rmarkdown_2.22   bit_4.0.5       
-[49] workflowr_1.7.0  hms_1.1.3        evaluate_0.21    knitr_1.43      
-[53] rlang_1.1.1      Rcpp_1.0.10      glue_1.6.2       rstudioapi_0.14 
-[57] vroom_1.6.3      jsonlite_1.8.4   R6_2.5.1         fs_1.6.2        </code></pre>
+[25] jquerylib_0.1.4  whisker_0.4.1    cachem_1.0.8     iterators_1.0.14
+[29] foreach_1.5.2    tidyselect_1.2.0 digest_0.6.31    stringi_1.7.12  
+[33] splines_4.3.0    rprojroot_2.0.3  fastmap_1.1.1    grid_4.3.0      
+[37] here_1.0.1       colorspace_2.1-0 cli_3.6.1        magrittr_2.0.3  
+[41] survival_3.5-5   utf8_1.2.3       withr_2.5.0      scales_1.2.1    
+[45] promises_1.2.0.1 bit64_4.0.5      timechange_0.2.0 rmarkdown_2.22  
+[49] bit_4.0.5        workflowr_1.7.0  hms_1.1.3        evaluate_0.21   
+[53] knitr_1.43       rlang_1.1.1      Rcpp_1.0.10      glue_1.6.2      
+[57] rstudioapi_0.14  vroom_1.6.3      jsonlite_1.8.7   R6_2.5.1        
+[61] fs_1.6.2        </code></pre>
 </div>
 </div>
 

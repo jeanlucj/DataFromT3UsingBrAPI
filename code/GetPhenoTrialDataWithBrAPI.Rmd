@@ -1,6 +1,6 @@
 ---
 title: "GetPhenoTrialDataFromT3"
-author: "Jean-Luc Jannink"
+author: "Jean-Luc Jannink and David Waring"
 date: "2023-07-06"
 output: html_document
 ---
@@ -11,12 +11,28 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Use here and BrAPI helper
 ```{r libraries}
+packages_used <- c("tidyverse", "devtools", "BrAPI")
+ip <- installed.packages()
+all_packages_installed <- TRUE
+for (package in packages_used){
+  if (!(package %in% ip[,"Package"])){
+    print(paste("Please install package", package))
+    all_packages_installed <- FALSE
+  }
+}#END packages_used
+if (!all_packages_installed) stop("Need to install packages")
+# Run this code if you need to install BrAPI
+if (!("BrAPI" %in% ip[,"Package"])){
+  devtools::install_git("https://github.com/TriticeaeToolbox/BrAPI.R")
+}
 library(tidyverse)
 library(devtools)
-here::i_am("code/GetPhenoTrialDataWithBrAPI.Rmd")
-devtools::install_git("https://github.com/TriticeaeToolbox/BrAPI.R")
 library(BrAPI)
+
+listBrAPIConnections()
 brapi <- getBrAPIConnection("T3/Wheat")
+
+here::i_am("code/GetPhenoTrialDataWithBrAPI.Rmd")
 ```
 
 ## Function to get a phenotypic study from a BrAPI server
@@ -27,17 +43,17 @@ getStudy <- function(studyName, traits=NULL){
   studyDbId <- studyMeta$data[[1]]$studyDbId
 
   plots <- brapi$get("observationunits",
-                    query=list(studyDbId=studyDbId),
-                    page="all", pageSize=100)
+                     query=list(studyDbId=studyDbId),
+                     page="all", pageSize=100)
   plot_info <- list()
-  for ( plot in plots$combined_data ) {
+  for (plot in plots$combined_data) {
     info <- list(
       id = plot$observationUnitDbId,
       row = plot$observationUnitPosition$positionCoordinateY,
       col = plot$observationUnitPosition$positionCoordinateX
     )
     # this is where plot (number), replicate, and block are held
-    for ( olr in plot$observationUnitPosition$observationLevelRelationships ) {
+    for (olr in plot$observationUnitPosition$observationLevelRelationships) {
       info[[olr$levelName]] <- olr$levelCode
     }
     plot_info[[plot$observationUnitName]] <- info
@@ -50,20 +66,21 @@ getStudy <- function(studyName, traits=NULL){
   
   toRet <- dplyr::tibble()
   addToTib <- function(pDl){
-    toRet <<- dplyr::bind_rows(toRet, c(studyName=studyName, 
-                               pDl[c("observationUnitName", 
-                                     "germplasmName", 
-                                     "observationVariableName", 
-                                     "value")],
-                               plotNumber=plot_info[[pDl$observationUnitName]]$plot,
-                               replicate=plot_info[[pDl$observationUnitName]]$replicate,
-                               block=plot_info[[pDl$observationUnitName]]$block,
-                               row=plot_info[[pDl$observationUnitName]]$row,
-                               col=plot_info[[pDl$observationUnitName]]$col))
+    toRet <<- dplyr::bind_rows(
+      toRet,
+      c(studyName=studyName,
+        pDl[c("observationUnitName",
+              "germplasmName",
+              "observationVariableName",
+              "value")],
+        plotNumber=plot_info[[pDl$observationUnitName]]$plot,
+        replicate=plot_info[[pDl$observationUnitName]]$replicate,
+        block=plot_info[[pDl$observationUnitName]]$block,
+        row=plot_info[[pDl$observationUnitName]]$row,
+        col=plot_info[[pDl$observationUnitName]]$col))
   }
   d <- sapply(phenoDat, addToTib)
-  toRet <- toRet %>% 
-    arrange(plotNumber)
+  toRet <- toRet %>% arrange(plotNumber)
   
   if (!is.null(traits)){
     toKeep <- NULL
@@ -91,5 +108,17 @@ for (studyName in studies){
 }
 readr::write_csv(allPhenoData, 
                  here::here("data", "multitrialPhenoDataBrAPI.csv"))
-```
 
+nTrials <- allPhenoData$studyName %>% unique %>% length
+nAccessions <- allPhenoData$germplasmName %>% unique %>% length
+nTraits <- allPhenoData$observationVariableName %>% unique %>% length
+nYieldPlots <- grep("yield", allPhenoData$observationVariableName) %>% length
+nHeightPlots <- grep("height", allPhenoData$observationVariableName) %>% length
+nTestWPlots <- grep("test", allPhenoData$observationVariableName) %>% length
+
+phenoInfo <- tibble(variable=c("nTrials", "nAccessions", "nTraits", 
+                               "nYieldPlots", "nHeightPlots", "nTestWPlots"),
+                    value=c(nTrials, nAccessions, nTraits, 
+                            nYieldPlots, nHeightPlots, nTestWPlots))
+phenoInfo  %>% rmarkdown::paged_table()
+```
