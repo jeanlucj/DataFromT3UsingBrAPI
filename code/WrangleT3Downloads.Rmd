@@ -132,16 +132,15 @@ phenoDat <- phenoDat %>%
 nTrials <- phenoDat$studyName %>% unique %>% length
 nLocations <- phenoDat$locationName %>% unique %>% length
 nAccessions <- phenoDat$germplasmName %>% unique %>% length
-nTraits <- phenoDat$observationVariableName %>% unique %>% length
 nYieldPlots <- nrow(phenoDat) - phenoDat$yield %>% is.na %>% sum
 nHeightPlots <- nrow(phenoDat) - phenoDat$height %>% is.na %>% sum
 nTestWPlots <- nrow(phenoDat) - phenoDat$testWeight %>% is.na %>% sum
 
 phenoInfo <- tibble(variable=c("nTrials", "nLocations", 
-                               "nAccessions", "nTraits", 
-                               "nYieldPlots", "nHeightPlots", "nTestWPlots"),
+                               "nAccessions", "nYieldPlots", 
+                               "nHeightPlots", "nTestWPlots"),
                     value=c(nTrials, nLocations, 
-                            nAccessions, nTraits, 
-                            nYieldPlots, nHeightPlots, nTestWPlots))
+                            nAccessions, nYieldPlots, 
+                            nHeightPlots, nTestWPlots))
 phenoInfo  %>% rmarkdown::paged_table()
 ```
